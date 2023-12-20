@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{ current_user.username }}'s Following {% endblock %}
+
+{% block content %}
+<h2> Following List </h2>
+
+<div class='card'> <br>
+{% for follower in followers %}
+    {% if follower.following.username != request.user %}
+    {% if follower.following.extrauser.profile_picture %}
+    <a href="{% url 'user_posts' follower.following.username %}"><img src="{{ follower.following.extrauser.profile_picture.url }}" style="width: 5em; height: 5em;" class="w3-circle"> {{ follower.following.username }} {% if request.user.username == current_user.username %} </a><a href="{% url 'delete_follower' follower_id=follower.following.id %}" style='padding-left: 5px;'> Unfollow</a> {% endif %}
+    {% else %}
+    <a href="{% url 'user_posts' follower.following.username %}"><img src="{% static 'images/default.jpg' %}" style="width: 5em; height: 5em;" class="w3-circle"> {{ follower.following.username }} {% if request.user.username == current_user.username %} </a><a href="{% url 'delete_follower' follower_id=follower.following.id %}" style='padding-left: 5px;'> Unfollow</a> {% endif %}
+    {% endif %}
+    {% endif %}
+{% endfor %}
+</div>
+{% endblock %}

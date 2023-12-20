@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %} Register {% endblock %}
+
+{% block content %}
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<div class='login-card'>
+    <h2 class='login-title'>Register</h2>
+    <form method="post" enctype='multipart/form-data'>
+        {% csrf_token %}
+        <label for='username' class='login-username'>Username: {{ form.username }} </label> <br><br>
+        <label for='password' class='login-password'> Password: {{ form.password1 }} </label> <br><br>
+        <label for='password' class='login-password'> Confirm Password: {{ form.password2 }} </label> <br><br>
+
+        <label for='profile' class='register-photo'>{{ profile_form.as_p }} </label>
+
+        <button type="submit" class='login-button'>Register</button>
+        <p class='register'> Already have an Account? <a href='{% url "login" %}'> Click Here to Login </a></p>
+    </form>
+    </div>
+{% endblock %}

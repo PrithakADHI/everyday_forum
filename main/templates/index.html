@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Everyday Forum - Home {% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %} <br>
+
+{% if followings %}
+
+{% for follower in followings %}
+<a href='{% url "user_posts" follower.following.username %}'>
+<div class='card'>
+    {% if follower.following.extrauser.profile_picture %}
+    <img src='{{ follower.following.extrauser.profile_picture.url }}' class='profile' style='width: 5em; height: 5em;' /> 
+    {% else %}
+    <img src='{% static "images/default.jpg" %}' class='profile' style='width: 5em; height: 5em;' />
+    {% endif %}
+    <p class='username' style='margin:0'>{{ follower.following.username }}</p>
+</div>
+</a>
+{% endfor %}
+
+<br><br>
+<div class='random-posts'>
+
+<div style='padding-top: 25px;'>
+
+{% if random_posts %}
+<h2 class='heading'> Random Posts from People You Follow </h2>
+{% endif %}
+{% for post in random_posts %}
+
+
+    <a href="{{ post.get_absolute_url }}">
+        <div class='post-card' style='word-wrap: break-word;'>
+        {% if post.user.extrauser.profile_picture %}
+        <img src='{{ post.user.extrauser.profile_picture.url }}' class='post-profile'>
+        {% else %}
+        <img src='{% static "images/default.jpg" %}' class='post-profile'>
+        {% endif %}
+        <p> {{ post.user.username }} </p>
+        <h2>{{ post.title|slice:":8" }}{% if post.title|length  > 8 %}...{% endif %}</h2>
+    
+        <p>{{ post.content|slice:":16" }}{% if post.content|length > 16 %}...{%endif%}</p>
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+{% else %}
+
+Nothing to See here... <br>
+Please Click the User Sign on Top to Follow someone.. 
+
+{% endif %}
+
+{% endif %}
+{% endblock %}

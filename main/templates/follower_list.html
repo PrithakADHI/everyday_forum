@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{ current_user.username }}'s Follower List {% endblock %}
+
+{% block content %}
+<h2> Follower List </h2>
+
+    <div class='card'> <br>
+    {% for follower in followers %}
+    {% if follower.user.extrauser.profile_picture %}
+    <a href='{% url "user_posts" follower.user.username %}'><img src='{{ follower.user.extrauser.profile_picture.url }}' style='width: 5em; height: 5em;' class='w3-circle'> {{ follower.user.username }} </a>
+    {% else %}
+    <a href='{% url "user_posts" follower.user.username %}'><img src='{% static "images/default.jpg" %}' style='width: 5em; height: 5em;' class='w3-circle'> <p>{{ follower.user.username }}</p> </a>
+    {% endif %}
+    {% endfor %}
+    </div>
+    {% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+    <ul class="messages">
+        {{ message }}
+    {% endfor %}
+    </ul>
+    {% endif %}
+    <div class='login-card'>
+    <h2 class='login-title'>Login</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label for="username" class='login-username'>Username:
+        <input type="text" id="username" name="username"></label> <br> <br>
+        <label for="password" class='login-password'>Password:
+        <input type="password" id="password" name="password"></label><br><br>
+        <button type="submit" value="Login" onclick="a()" class='login-button'> Login </button>
+    </form>
+    <p class='register'> Don't have an account? <a href='{% url "register" %}'> Click Here to Register </a></p>
+</div>
+{% endblock %}
