@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
+{% load static %}
+
 
 {% block title %} Register {% endblock %}
+
+{% block override_css %}
+<script src="https://kit.fontawesome.com/f85c4e35e9.js" crossorigin="anonymous"></script>
+
+<link rel='stylesheet' href='{% static "css/login.css" %}'>
+{% endblock %}
 
 {% block content %}
 {% if messages %}
@@ -11,18 +19,35 @@
     </ul>
 {% endif %}
 
-<div class='login-card'>
-    <h2 class='login-title'>Register</h2>
-    <form method="post" enctype='multipart/form-data'>
+
+<div class='wrapper'>
+    <h1>Register</h1>
+    <form method='post'>
         {% csrf_token %}
-        <label for='username' class='login-username'>Username: {{ form.username }} </label> <br><br>
-        <label for='password' class='login-password'> Password: {{ form.password1 }} </label> <br><br>
-        <label for='password' class='login-password'> Confirm Password: {{ form.password2 }} </label> <br><br>
+        <div class='input-box'>
+            {{ form.username }}
+            <i class='fa-solid fa-user'></i>
+        </div>
 
-        <label for='profile' class='register-photo'>{{ profile_form.as_p }} </label>
-
-        <button type="submit" class='login-button'>Register</button>
-        <p class='register'> Already have an Account? <a href='{% url "login" %}'> Click Here to Login </a></p>
+        <div class='input-box'>
+            {{ form.password1 }}
+            <i class='fa-solid fa-lock'></i>
+        </div>
+        <div class='input-box'>
+            {{ form.password2 }}
+            <i class='fa-solid fa-lock'></i>
+        </div>
+        <div class='input-box'>
+            <div style='padding-bottom: 5px'>
+            {{ profile_form.profile_picture }}
+            <i class='fa-solid fa-picture-o' style='padding-top: 10px;' ></i>
+            </div>
+        </div> <br>
+        <button type='submit' class='btn'> Register </button>
+        <div class="register-link">
+        <p> Already have an account? <a href='{% url "login" %}'>Click here to Login</a></p>
+        </div>
     </form>
-    </div>
+</div>
+
 {% endblock %}

@@ -1,0 +1,187 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} Everyday Forum {% endblock %} </title>
+    {% block override_css %}
+    <link rel="stylesheet" href="{% static 'css/new_global.css' %}">
+    {% endblock %}
+    <script src="https://kit.fontawesome.com/f85c4e35e9.js" crossorigin="anonymous"></script>
+    
+</head>
+<body>
+    
+    <nav>
+            <div class="nav-left">
+                <img src="{% static 'images/black-evil-cat.png' %}" class="logo">
+                
+                <i class="fa fa-users" aria-hidden="true" style='font-size: 30px;'></i>
+            </div>
+            <div class="nav-right">
+
+                <div class="search-box">
+                    <img src="{% static 'images/search.png'%}" >
+                    <input type="text" placeholder="Search">
+            </div>
+
+                <div class="nav-user-icon online">
+                    <a href='{% url "user_posts" request.user.username %}'>
+                    {% if request.user.extrauser.profile_picture %}
+                        <img src="{{ request.user.extrauser.profile_picture.url }}">
+                    {% else %}
+                        <img src="{% static 'images/default.jpg' %}">
+                    {% endif %}
+                    </a>
+                </div>
+            </div>
+    </nav>
+
+    <div class="container">
+        <!--------left sidebar-------------->
+        <div class="left-sidebar">
+            <div class="imp-links">
+                <a href="#"><img src="images/news.png" > Latest news</a>
+                <a href="#"><img src="images/friends.png" > Friends</a> 
+                <a href="#"><img src="images/group.png" > Groups</a>
+                <a href="#">See More</a>
+            </div>
+            <div class="shortcut-links">
+                <p>Your Shortcuts</p>
+                <a href="#"><img src="images/shortcut-1.png" >Web Developers</a>
+                <a href="#"><img src="images/shortcut-2.png" >Web Design Course</a>
+                <a href="#"><img src="images/shortcut-3.png" >Frontend Development</a>
+                <a href="#"><img src="images/shortcut-4.png" >Web Experrts</a>
+            </div>
+
+        </div>
+         <!--------main content-------------->
+        <div class="main-content">
+            {% block content %}
+
+            {% endblock %}
+
+        </div>
+            <!--------right sidebar-------------->
+        <div class="right-sidebar">
+
+        <div class="sidebar-title">
+            <h4>Events</h4>
+            <a href="#">See all</a>
+        </div>
+        <div class="event">
+            <div class="left-event">
+                <h3>19</h3>
+                <span>December</span>
+
+            </div>
+            <div class="right-event">
+                <h4>Cat Fair 2023</h4>
+                <p> <i class="fa-solid fa-location-dot"></i> Toyota Cat Park</p>
+                <a href="#">More Info</a>
+            </div>
+        </div>
+        <div class="event">
+            <div class="left-event">
+                <h3>25</h3>
+                <span>December</span>
+    
+            </div>
+            <div class="right-event">
+                <h4>Meowrry Catmas</h4>
+                <p> <i class="fa-solid fa-location-dot"></i> HUH Cat's House</p>
+                <a href="#">More Info</a>
+            </div>
+        </div>
+        <div class="sidebar-title">
+            <h4>Advertisement:</h4>
+            <a href="#">close</a>
+        </div>
+        <img src="images/huh cat.jpg" class="sidebar-ads">  
+    </div>
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script>
+        
+        function followUser(userId) {
+          // Perform the follow action using AJAX
+          $.get("{% url 'add_follower_ajax' follower_id=0 %}".replace("0", userId), function(data) {
+            // Handle the response
+            console.log(data);
+    
+            // Update the page content
+            if (data.status === 'success') {
+              // Update follower and following counts
+              $('#followerCount').text(data.followerCount);
+              $('#followingCount').text(data.followingCount);
+    
+              // Update "Follow" link to "Unfollow"
+              $('#followLink').text('Unfollow');
+              $('#followLink').attr('onclick', 'return unfollowUser(' + userId + ')');
+    
+              // Manipulate the browser history
+              var stateObj = { userId: userId, action: 'follow' };
+              window.history.replaceState(stateObj, "Followed user", window.location.href);
+            }
+          });
+          return false;  // Prevent default anchor tag behavior
+        }
+    
+        function unfollowUser(userId) {
+          // Perform the unfollow action using AJAX
+          $.get("{% url 'delete_follower_ajax' follower_id=0 %}".replace("0", userId), function(data) {
+            // Handle the response
+            console.log(data);
+    
+            // Update the page content
+            if (data.status === 'success') {
+              // Update follower and following counts
+              $('#followerCount').text(data.followerCount);
+              $('#followingCount').text(data.followingCount);
+    
+              // Update "Unfollow" link to "Follow"
+              $('#followLink').text('Follow');
+              $('#followLink').attr('onclick', 'return followUser(' + userId + ')');
+    
+              // Manipulate the browser history
+              var stateObj = { userId: userId, action: 'unfollow' };
+              window.history.replaceState(stateObj, "Unfollowed user", window.location.href);
+            }
+          });
+          return false;  // Prevent default anchor tag behavior
+        }
+    
+        function w3_open() {
+          if(document.getElementById("Profile").style.display == "none") {
+            document.getElementById("Profile").style.display = "block";
+          } else {
+            document.getElementById("Profile").style.display = "none"
+          }
+        }
+      
+      function w3_close() {
+        document.getElementById("mySidebar").style.display = "none";
+      }
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          console.log(entry)
+          if(entry.isIntersecting) {
+            entry.target.classList.add('show');
+          } else {
+            entry.target.classList.remove('show');
+          }
+        });
+      });
+    
+    </script>
+
+
+</body>
+</html>

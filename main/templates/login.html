@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %} Login {% endblock %}
+
+{% block override_css %}
+
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+<script src="https://kit.fontawesome.com/f85c4e35e9.js" crossorigin="anonymous"></script>
+
+{% endblock %}
 
 {% block content %}
 {% if messages %}
@@ -9,17 +17,25 @@
         {{ message }}
     {% endfor %}
     </ul>
-    {% endif %}
-    <div class='login-card'>
-    <h2 class='login-title'>Login</h2>
+{% endif %}
+
+<div class="wrapper">
     <form method="post">
         {% csrf_token %}
-        <label for="username" class='login-username'>Username:
-        <input type="text" id="username" name="username"></label> <br> <br>
-        <label for="password" class='login-password'>Password:
-        <input type="password" id="password" name="password"></label><br><br>
-        <button type="submit" value="Login" onclick="a()" class='login-button'> Login </button>
+        <h1>Login</h1>
+        <div class="input-box">
+            <input name='username' type="text" placeholder="Username" class='username' required> 
+            <i class="fa-solid fa-user"></i>
+            </div>
+            
+            <div class="input-box">
+            <input name='password' type="password" placeholder="Password" required>
+            <i class="fa-solid fa-lock"></i>
+        </div>
+        <button type="submit" class="btn" onclick="a()">Login</button>
+        <div class="register-link">
+            <p>Don't have an account? <a href="{% url 'register' %}">Register</a> </p>
+        </div>
     </form>
-    <p class='register'> Don't have an account? <a href='{% url "register" %}'> Click Here to Register </a></p>
 </div>
 {% endblock %}

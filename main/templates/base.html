@@ -4,124 +4,215 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title> {% block title %} EveryDay Forum {% endblock %} </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href='{% static "css/global.css" %}'>
-<link rel='stylesheet' type='text/css' href='{% static "css/w3.css" %}'>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-<nav class="w3-sidebar w3-right w3-bar-block w3-card w3-top w3-xlarge w3-animate-right" style="display:none;right:0;width:20%;min-width:200px" id="Profile">
-    <div style='padding-top: 100px;'>
-      {% if user.is_authenticated %}
-      {% if profile_picture %}
-      <a class='w3-bar-item w3-button' href='{% url "user_posts" request.user.username %}'> <img src='{{profile_picture.url}}' style='width: 50px; height: 50px;' class='w3-circle'> &nbsp; {{ request.user.username }} </a>
-      {% else %}
-      <a class='w3-bar-item w3-button' href='{% url "user_posts" request.user.username %}'> <img src='{% static "images/default.jpg"%}' style='width: 50px; height: 50px;' class='w3-circle'> &nbsp; {{ request.user.username }} </a>
-  
-      {% endif %}
-      <a href="{% url 'logout' %}" style='color: black;'><p class='w3-bar-item w3-button'> Logout </p></a>
-      {% endif %}
-  </div>
-</nav>
-<div class='w3-bar' style='background-color: #1d3557; z-index:10000; position: fixed; top:0px; width:100%;'>
-<a href="{% url 'index' %}" class='w3-bar-item w3-button w3-padding-32' style='color: white; font-family: Helvetica; font-weight: bold;'> Everyday Forum </a>
-
-{% if user.is_authenticated %}
-
-{% if profile_picture %}
-<div onclick='w3_open()'><a class='w3-bar-item w3-padding-16 w3-right'><img src='{{ profile_picture.url }}' class='w3-circle profile-picture'></a></div>
-{% else %}
-<div onclick='w3_open()'><a class='w3-bar-item w3-padding-16 w3-right'><img src='{% static "images/default.jpg" %}' class='w3-circle profile-picture'></a></div>
-{% endif %}
-
-<a href="{% url 'user_list' %}" class='w3-button w3-padding-16 w3-left size w3-bar-item w3-button w3-padding-32 w3-right' style='color: white;'> <i class='fa fa-user-circle-o' style='font-size: 20px;'> </i> </a>  
-
-<a href="{% url 'post_add' %}" class='w3-bar-item w3-button w3-padding-32 w3-right'  style='color: white;'> <i class='fa fa-plus-circle' style='font-size: 20px;'></i> </a>    
-
-{% endif %}
-</div>
-
-<div style=' margin-bottom: 100px; '> </div>
-
-
-{% block content %}
-
-{% endblock %}
-
-</div>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-<script>
+    <title>{% block title %} Everyday Forum {% endblock %} </title>
+    {% block override_css %}
+    <link rel="stylesheet" href="{% static 'css/new_global.css' %}">
+    {% endblock %}
+    <script src="https://kit.fontawesome.com/f85c4e35e9.js" crossorigin="anonymous"></script>
     
-    function followUser(userId) {
-      // Perform the follow action using AJAX
-      $.get("{% url 'add_follower_ajax' follower_id=0 %}".replace("0", userId), function(data) {
-        // Handle the response
-        console.log(data);
+</head>
+{% if user.is_authenticated %}
+<body>
+    
+    <nav>
+            <div class="nav-left">
+                <a href='{% url "index" %}'><img src="{% static 'images/black-evil-cat.png' %}" class="logo"></a>
+                
+                <a href='{% url "user_list" %}'><i class="fa fa-users" aria-hidden="true" style='font-size: 30px; color:black;'></i></a>
+            </div>
+            
+            <div class="nav-right">
 
-        // Update the page content
-        if (data.status === 'success') {
-          // Update follower and following counts
-          $('#followerCount').text(data.followerCount);
-          $('#followingCount').text(data.followingCount);
+                <div class="search-box">
+                    <img src="{% static 'images/search.png'%}" >
+                    <input type="text" placeholder="Search">
+            </div>
 
-          // Update "Follow" link to "Unfollow"
-          $('#followLink').text('Unfollow');
-          $('#followLink').attr('onclick', 'return unfollowUser(' + userId + ')');
+                <div class="nav-user-icon online">
+                    <a href='{% url "user_posts" request.user.username %}'>
+                    {% if request.user.extrauser.profile_picture %}
+                        <img src="{{ request.user.extrauser.profile_picture.url }}">
+                    {% else %}
+                        <img src="{% static 'images/default.jpg' %}">
+                    {% endif %}
+                    </a>
+                </div>
+            </div>
+            
+    </nav>
 
-          // Manipulate the browser history
-          var stateObj = { userId: userId, action: 'follow' };
-          window.history.replaceState(stateObj, "Followed user", window.location.href);
+    <div class="container">
+        <!--------left sidebar-------------->
+        <div class="left-sidebar">
+            <div class="imp-links">
+                <a href="#"><img src="{% static 'images/news.png'%}" > Latest news</a>
+                <a href="#"><img src="{% static 'images/friends.png'%}" > Friends</a> 
+                <a href="#"><img src="{% static 'images/group.png'%}" > Groups</a>
+                <a href="#">See More</a>
+            </div>
+            <div class="shortcut-links">
+                <p>Your Shortcuts</p>
+                <a href="#"><img src="{% static 'images/shortcut-1.png'%}" >Web Developers</a>
+                <a href="#"><img src="{% static 'images/shortcut-2.png'%}" >Web Design Course</a>
+                <a href="#"><img src="{% static 'images/shortcut-3.png'%}" >Frontend Development</a>
+                <a href="#"><img src="{% static 'images/shortcut-4.png'%}" >Web Experrts</a>
+            </div>
+
+        </div>
+        {% endif %}
+         <!--------main content-------------->
+        <div class="main-content">
+            {% block content %}
+
+            {% endblock %}
+
+        </div>
+            <!--------right sidebar-------------->
+            {% if user.is_authenticated %}
+        <div class="right-sidebar">
+
+        
+        <div class="sidebar-title">
+            <h4>Advertisement:</h4>
+            <a href="#">close</a>
+        </div>
+        <img src="{% static 'images/huh cat.jpg'%}" class="sidebar-ads">  
+    </div>
+
+    </div>
+    {% endif %}
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script>
+        
+        function followUser(userId) {
+          // Perform the follow action using AJAX
+          $.get("{% url 'add_follower_ajax' follower_id=0 %}".replace("0", userId), function(data) {
+            // Handle the response
+            console.log(data);
+    
+            // Update the page content
+            if (data.status === 'success') {
+              // Update follower and following counts
+              $('#followerCount').text(data.followerCount);
+              $('#followingCount').text(data.followingCount);
+    
+              // Update "Follow" link to "Unfollow"
+              $('#followLink').text('Unfollow');
+              $('#followLink').attr('onclick', 'return unfollowUser(' + userId + ')');
+    
+              // Manipulate the browser history
+              var stateObj = { userId: userId, action: 'follow' };
+              window.history.replaceState(stateObj, "Followed user", window.location.href);
+            }
+          });
+          return false;  // Prevent default anchor tag behavior
         }
-      });
-      return false;  // Prevent default anchor tag behavior
-    }
-
-    function unfollowUser(userId) {
-      // Perform the unfollow action using AJAX
-      $.get("{% url 'delete_follower_ajax' follower_id=0 %}".replace("0", userId), function(data) {
-        // Handle the response
-        console.log(data);
-
-        // Update the page content
-        if (data.status === 'success') {
-          // Update follower and following counts
-          $('#followerCount').text(data.followerCount);
-          $('#followingCount').text(data.followingCount);
-
-          // Update "Unfollow" link to "Follow"
-          $('#followLink').text('Follow');
-          $('#followLink').attr('onclick', 'return followUser(' + userId + ')');
-
-          // Manipulate the browser history
-          var stateObj = { userId: userId, action: 'unfollow' };
-          window.history.replaceState(stateObj, "Unfollowed user", window.location.href);
+    
+        function unfollowUser(userId) {
+          // Perform the unfollow action using AJAX
+          $.get("{% url 'delete_follower_ajax' follower_id=0 %}".replace("0", userId), function(data) {
+            // Handle the response
+            console.log(data);
+    
+            // Update the page content
+            if (data.status === 'success') {
+              // Update follower and following counts
+              $('#followerCount').text(data.followerCount);
+              $('#followingCount').text(data.followingCount);
+    
+              // Update "Unfollow" link to "Follow"
+              $('#followLink').text('Follow');
+              $('#followLink').attr('onclick', 'return followUser(' + userId + ')');
+    
+              // Manipulate the browser history
+              var stateObj = { userId: userId, action: 'unfollow' };
+              window.history.replaceState(stateObj, "Unfollowed user", window.location.href);
+            }
+          });
+          return false;  // Prevent default anchor tag behavior
         }
-      });
-      return false;  // Prevent default anchor tag behavior
-    }
-
-    function w3_open() {
-      if(document.getElementById("Profile").style.display == "none") {
-        document.getElementById("Profile").style.display = "block";
-      } else {
-        document.getElementById("Profile").style.display = "none"
+    
+        function w3_open() {
+          if(document.getElementById("Profile").style.display == "none") {
+            document.getElementById("Profile").style.display = "block";
+          } else {
+            document.getElementById("Profile").style.display = "none"
+          }
+        }
+      
+      function w3_close() {
+        document.getElementById("mySidebar").style.display = "none";
       }
-    }
-  
-  function w3_close() {
-    document.getElementById("mySidebar").style.display = "none";
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          console.log(entry)
+          if(entry.isIntersecting) {
+            entry.target.classList.add('show');
+          } else {
+            entry.target.classList.remove('show');
+          }
+        });
+      });
+    
+    // JavaScript
+// Get the modal
+var modal1 = document.getElementById("myModal1");
+
+// Get the button that opens the modal
+var btn1 = document.getElementById("openModal1");
+
+// Get the <span> element that closes the modal
+var span1 = document.getElementById("closeModal1");
+
+// When the user clicks on the button, open the modal 
+btn1.onclick = function() {
+  modal1.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span1.onclick = function() {
+  modal1.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+
+
+// Get the modal
+var modal2 = document.getElementById("myModal2");
+
+// Get the button that opens the modal
+var btn2 = document.getElementById("openModal2");
+
+// Get the <span> element that closes the modal
+var span2 = document.getElementById("closeModal2");
+
+// When the user clicks on the button, open the modal 
+btn2.onclick = function() {
+  modal2.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span2.onclick = function() {
+  modal2.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal1) {
+    modal1.style.display = "none";
   }
-  
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      console.log(entry)
-      if(entry.isIntersecting) {
-        entry.target.classList.add('show');
-      } else {
-        entry.target.classList.remove('show');
-      }
-    });
-  });
+  if (event.target == modal2) {
+    modal2.style.display = "none";
+  }
+}
 
-</script>
+
+    
+    </script>
+
+
+</body>
+</html>

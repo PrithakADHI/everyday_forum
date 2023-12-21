@@ -4,9 +4,9 @@ from .models import User, Follower, Post, ExtraUser, Comment
 
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.forms import UserCreationForm
 
-from .forms import MakePost, ProfilePictureForm, CommentForm
+
+from .forms import MakePost, ProfilePictureForm, CommentForm, CustomUserCreationForm
 
 from datetime import datetime
 
@@ -22,9 +22,29 @@ def index(request):
             random_posts = Post.objects.filter(user__in=followed_users).order_by("?")[:15]
         else:
             random_posts = []
+    
+        if request.method == "POST":
+            form = MakePost(request.POST, request.FILES)
+            if form.is_valid():
+                form_title = form.cleaned_data["title"]
+                form_content = form.cleaned_data["content"]
+                current_user = request.user
+                current_time = datetime.now()
+                if 'picture' in request.FILES:
+                    Post(user=current_user, created_at=current_time, title=form_title, content=form_content, picture=request.FILES['picture']).save()
+                else:
+                    Post(user=current_user, created_at=current_time, title=form_title, content=form_content, picture=None).save()
+                return redirect('index')
+        else:
+            form = MakePost()
+        
     else:
         return redirect('login')
-    return render(request, 'index.html', {'posts': posts, 'followings': following_users, 'user_profile': profile_picture, 'random_posts': random_posts})
+        
+
+    return render(request, 'index.html', {'posts': posts, 'followings': following_users, 'user_profile': profile_picture, 'random_posts': random_posts, 'form': form})
+
+    
 
 def tests(request):
     return render(request, 'tests.html')
@@ -103,12 +123,17 @@ def user_posts(request, username):
 
     is_following = Follower.is_following(request.user, user)
 
+    following = Follower.objects.filter(user=user)
+    followers = Follower.objects.filter(following=user)
+
     context = {
         'user': user,
         'posts': posts,
         'followers_count': followers_count,
         'following_count': following_count,
         'is_following': is_following,
+        'following': following,
+        'followers': followers,
     }
 
     return render(request, 'user_posts.html', context)
@@ -180,7 +205,7 @@ from django.contrib import messages
 
 def register_view(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         profile_form = ProfilePictureForm(request.POST, request.FILES)
         if form.is_valid() and profile_form.is_valid():
             user = form.save()
@@ -205,7 +230,7 @@ def register_view(request):
                 messages.error(request, message)
 
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
         profile_form = ProfilePictureForm()
 
     return render(request, 'register.html', {'form': form, 'profile_form': profile_form})

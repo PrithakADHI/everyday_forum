@@ -5,34 +5,114 @@
 
 {% block content %}
 
-<div style='margin-top: 3em;'>
+<div class='user-container'>
 
-<div style='margin-left: 2em;'>
-{% if user.extrauser.profile_picture %}
-<h1> <img src='{{ user.extrauser.profile_picture.url }}' style='width: 3em; height: 3em;' class='w3-circle'> {{ user.username }} </h1>
-{% else %}
-<h1> <img src='{% static "images/default.jpg" %}' style='width: 3em; height: 3em;' class='w3-circle'> {{ user.username }} </h1>
-{% endif %}
+    <div class='user-profile'>
+    {% if user.extrauser.profile_picture %}
+    <img src='{{ user.extrauser.profile_picture.url }}' class='profile' style='width: 5em; height: 5em;'> {{ user.username }}
+    {% else %}
+    <h1> <img src='{% static "images/default.jpg" %}' style='width: 3em; height: 3em;' class='w3-circle'> {{ user.username }} </h1>
+    {% endif %}
+    </div>
+</div>
 {% if user.username != request.user.username %}
+<div class='user-container' style='margin-top: 1em;'>
 {% if is_following %}
-<a id="followLink" href="#" onclick="return unfollowUser({{ user.id }})" style='padding-left: 5px;'>Unfollow</a> &nbsp;
+<p><a id="followLink" href="#" onclick="return unfollowUser({{ user.id }})" style='padding-left: 5px;'>Unfollow</a></p> &nbsp;
 
 {% else %}
-<a id="followLink" href="#" onclick="return followUser({{ user.id }})" style='padding-left: 5px;'>Follow</a>
+<p><a id="followLink" href="#" onclick="return followUser({{ user.id }})" style=''>Follow</a></p>
 {% endif %}
-{% endif %}
-<a href='{% url "follower_list" user.username %}'><p> Followers: <span id="followingCount">{{ following_count }}</span></a> | <a href='{% url "following_list" user.username %}'>Following: <span id="followerCount">{{ followers_count }}</span> </a>
-</div>
-    <br><br><div class='w3-container random-posts'> <br><br>
-{% for post in posts %}
-    <a href="{{ post.get_absolute_url }}">
-    <div class='post-card' style='word-wrap: break-word;'>
-    <h2>{{ post.title|slice:":8" }}{% if post.title|length  > 8 %}...{% endif %}</h2>
+{% else %}
 
-    <p>{{ post.content|slice:":23" }}{% if post.content|length > 23 %}...{%endif%}</p>
+<div class='user-container' style='margin-top: 1em;'>
+<a href='{% url "logout" %}'> Logout </a>
 </div>
-</a>
+
+<div class='user-container' style='margin-top: 1em;'>
+{% endif %}
+<br>
+    <div style='padding-left: 5px;'>
+    <button id="openModal1">Following: <span id='followerCount'> {{ followers_count }}</span> </button> | <button id="openModal2">Followers: <span id='followingCount'> {{ following_count }}</span> </button>
+        
+
+</div>
+</div>
+
+<div id="myModal1" class="modal">
+  <div class="modal-content">
+    <span id="closeModal1">&times;</span>
+    <p class='heading'>Following List</p>
+    <br>
+    {% for follower in following %}
+    {% if follower.following.username != request.user %}
+    {% if follower.following.extrauser.profile_picture %}
+    <p><a href="{% url 'user_posts' follower.following.username %}"><img src="{{ follower.following.extrauser.profile_picture.url }}" class="profile-picture"> {{ follower.following.username }} </a> {% if request.user.username == current_user.username %} </a><a href="{% url 'delete_follower' follower_id=follower.following.id %}" style='padding-left: 5px;'> Unfollow</a> {% endif %}</p>
+    {% else %}
+    <p><a href="{% url 'user_posts' follower.following.username %}"><img src="{% static 'images/default.jpg' %}" class="profile-picture"> {{ follower.following.username }} {% if request.user.username == current_user.username %} </a><a href="{% url 'delete_follower' follower_id=follower.following.id %}" style='padding-left: 5px;'> Unfollow</a> {% endif %}</p>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<div id='myModal2' class='modal'>
+    <div class='modal-content'>
+        <span id='closeModal2'>&times;</span>
+        <p class='heading'> Follower List </p>
+        <br>
+        {% for follower in followers %}
+        {% if follower.user.extrauser.profile_picture %}
+        <p><a href='{% url "user_posts" follower.user.username %}'><img src='{{ follower.user.extrauser.profile_picture.url }}' class='profile-picture'> {{ follower.user.username }} </a></p>
+        {% else %}
+        <p><a href='{% url "user_posts" follower.user.username %}'><img src='{% static "images/default.jpg" %}' class='profile-picture'>{{ follower.user.username }}</a></p>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+{% for post in posts %}
+<div class="post-container" style='margin-top: 1em;'>
+    <div class="post-row">
+        <div class="user-profile">
+            {% if post.user.extrauser.profile_picture %}
+        <img src='{{ post.user.extrauser.profile_picture.url }}' class='post-profile'>
+        {% else %}
+        <img src='{% static "images/default.jpg" %}' class='post-profile'>
+        {% endif %}
+            <div>
+                <p>{{post.user.username}}</p>
+                <small>{{ post.created_at }}</small>
+            </div>
+        </div>
+        <a href="#"><i class="fa-solid fa-ellipsis-v"></i></a>
+
+    </div>
+    
+    <p class="post-text"> {{ post.content }} </p>
+    {% if post.picture %}
+    <img src="{{ post.picture.url }}" class="post-img">
+    {% endif %}
+    <div class="post-row">
+        <div class="post-profile-icon">
+    </div>
+
+    </div>
+
+</div>
 {% endfor %}
-</div>
 
 {% endblock %}
+
+        <br><br><div class='w3-container random-posts'> <br><br>
+    {% for post in posts %}
+        <a href="{{ post.get_absolute_url }}">
+        <div class='post-card' style='word-wrap: break-word;'>
+        <h2>{{ post.title|slice:":8" }}{% if post.title|length  > 8 %}...{% endif %}</h2>
+    
+        <p>{{ post.content|slice:":23" }}{% if post.content|length > 23 %}...{%endif%}</p>
+    </div>
+    </a>
+    {% endfor %}
+    </div>
+    

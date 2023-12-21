@@ -1,18 +1,13 @@
 {% extends 'base.html' %}
-
 {% load static %}
-
-{% block title %} Everyday Forum - Home {% endblock %}
-
 {% block content %}
-{% if user.is_authenticated %} <br>
-
-{% if followings %}
-
-{% for follower in followings %}
-<a href='{% url "user_posts" follower.following.username %}'>
-<div class='card'>
-    {% if follower.following.extrauser.profile_picture %}
+    <div classs='post-container'>
+    <div class='card-container' style='padding-top: 1em;'>
+        <h3 style='padding-left: 10px;'>People You Follow</h3>
+    {% for follower in followings %}
+    <a href='{% url "user_posts" follower.following.username %}'>
+        <div class='card'>
+            {% if follower.following.extrauser.profile_picture %}
     <img src='{{ follower.following.extrauser.profile_picture.url }}' class='profile' style='width: 5em; height: 5em;' /> 
     {% else %}
     <img src='{% static "images/default.jpg" %}' class='profile' style='width: 5em; height: 5em;' />
@@ -20,44 +15,64 @@
     <p class='username' style='margin:0'>{{ follower.following.username }}</p>
 </div>
 </a>
-{% endfor %}
+    {% endfor %}
+    
+</div>
 
-<br><br>
-<div class='random-posts'>
+</div>
 
-<div style='padding-top: 25px;'>
+<div class="write-post-container">
+    <div class="user-profile">
+        {% if request.user.extrauser.profile_picture %}
+    <img src='{{ request.user.extrauser.profile_picture.url }}' class='profile' style='width: 2em; height: 2em;' /> 
+    {% else %}
+    <img src='{% static "images/default.jpg" %}' class='profile' style='width: 2em; height: 2em;' />
+    {% endif %}
+        <div>
+            <p>{{ request.user.username }}</p>
+        </div>
+    </div>
 
-{% if random_posts %}
-<h2 class='heading'> Random Posts from People You Follow </h2>
-{% endif %}
+    <div class="post-input-container">
+<textarea rows="3" placeholder="What's on your mind?"></textarea>
+
+<div class="add-post-links">
+    <a> Post? </a>
+</div>
+
+    </div>
+
+</div>
+
 {% for post in random_posts %}
-
-
-    <a href="{{ post.get_absolute_url }}">
-        <div class='post-card' style='word-wrap: break-word;'>
-        {% if post.user.extrauser.profile_picture %}
+<div class="post-container" style='margin-top: 1em;'>
+    <div class="post-row">
+        <div class="user-profile">
+            {% if post.user.extrauser.profile_picture %}
         <img src='{{ post.user.extrauser.profile_picture.url }}' class='post-profile'>
         {% else %}
         <img src='{% static "images/default.jpg" %}' class='post-profile'>
         {% endif %}
-        <p> {{ post.user.username }} </p>
-        <h2>{{ post.title|slice:":8" }}{% if post.title|length  > 8 %}...{% endif %}</h2>
-    
-        <p>{{ post.content|slice:":16" }}{% if post.content|length > 16 %}...{%endif%}</p>
-</div>
+            <div>
+                <p>{{post.user.username}}</p>
+                <small>{{ post.created_at }}</small>
+            </div>
+        </div>
+        <a href="#"><i class="fa-solid fa-ellipsis-v"></i></a>
 
+    </div>
+    
+    <p class="post-text"> {{ post.content }} </p>
+    {% if post.picture %}
+    <img src="{{ post.picture.url }}" class="post-img">
+    {% endif %}
+    <div class="post-row">
+        <div class="post-profile-icon">
+    </div>
+
+    </div>
+
+</div>
 {% endfor %}
 
-</div>
-
-</div>
-
-{% else %}
-
-Nothing to See here... <br>
-Please Click the User Sign on Top to Follow someone.. 
-
-{% endif %}
-
-{% endif %}
 {% endblock %}
