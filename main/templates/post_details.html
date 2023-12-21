@@ -54,6 +54,9 @@
 <img class='profile-picture w3-circle' src='{% static 'images/default.jpg' %}'> {{ comment.user.username }}
 {% endif %}
 <div style='white-space: pre-line;'>{{ comment.comment }}</div>
+{% if request.user == comment.user %}
+<a href='{% url "delete_comment" comment.id %}'> Delete Comment </a>
+{% endif %}
 </div>
 {% endfor %}
 </div>

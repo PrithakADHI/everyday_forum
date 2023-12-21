@@ -17,6 +17,8 @@ urlpatterns = [
     path("add_follower_2/<int:follower_id>", views.add_follower, name='add_follower'),
     path("delete_follower_2/<int:follower_id>", views.delete_follower, name='delete_follower'),
 
+    path('delete_comment/<int:comment_id>', views.delete_comment, name='delete_comment'),
+
     path("tests", views.tests, name="tests"),
 
     path("add_post", views.post_add, name="post_add"),

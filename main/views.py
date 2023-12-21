@@ -92,6 +92,13 @@ def delete_follower_ajax(request, follower_id):
         return JsonResponse({'status': 'success', 'followerCount': followers_count, 'followingCount': following_count})
     return JsonResponse({'status': 'error'})
 
+def delete_comment(request, comment_id):
+    if request.method == 'GET':
+        comment = Comment.objects.get(id=comment_id)
+        Comment.objects.filter(id=comment_id).delete()
+
+        return redirect(request.META.get('HTTP_REFERER', '/default-url/'))
+
 # For Posts
 
 def user_posts(request, username):
@@ -117,7 +124,7 @@ def post_details(request, post_slug):
     post = get_object_or_404(Post, slug=post_slug)
     comments = Comment.objects.filter(post=post)
 
-    default_comment = 'Comment some nice things :)'
+    default_comment = ''
 
     form = CommentForm(request.POST)
     if form.is_valid():
