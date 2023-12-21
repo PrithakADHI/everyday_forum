@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-o+=p(qp)-e!(m_jqat8((vm85fh8*(b_7l!m_@o=#lm$bq%@=@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'prithak.loca.lt', '0.tcp.in.ngrok.io']
+ALLOWED_HOSTS = ['localhost', 'prithak.loca.lt', '0.tcp.in.ngrok.io', '127.0.0.1']
 CSRF_TRUSTED_ORIGINS = ['https://prithak.loca.lt', 'http://0.tcp.in.ngrok.io']
 
 
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+    'chat',
 ]
 
 MIDDLEWARE = [
@@ -76,6 +77,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'everyday_forum.wsgi.application'
+ASGI_APPLICATION = 'everyday_forum.asgi.application' 
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
 
 
 # Database
