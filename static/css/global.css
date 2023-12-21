@@ -255,7 +255,8 @@ textarea:focus {
   margin: 10px;
   padding: 20px;
   text-align: center;
-  width: 150px;
+  width: auto;
+  min-width: 150px;
   height: auto;
   max-height: 300px;
   display: inline-block;
@@ -325,7 +326,7 @@ textarea:focus {
 
 .post-image {
   box-shadow: 5px 5px 5px hsla(0, 0%, 0%, 0.1);
-  width: 70vw;
+  width: 40vw;
   height: auto;
   display: inline-block;
 }
