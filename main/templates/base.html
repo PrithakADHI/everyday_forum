@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5">
     <title>{% block title %} Everyday Forum {% endblock %} </title>
     {% block override_css %}
     <link rel="stylesheet" href="{% static 'css/new_global.css' %}">
@@ -17,7 +17,7 @@
     
     <nav>
             <div class="nav-left">
-                <a href='{% url "index" %}'><img src="{% static 'images/black-evil-cat.png' %}" class="logo"></a>
+                <a href='{% url "index" %}' class='logo'>Everyday Forum</a>
                 
                 <a href='{% url "user_list" %}'><i class="fa fa-users" aria-hidden="true" style='font-size: 30px; color:black;'></i></a>
             </div>
@@ -29,7 +29,7 @@
                     <input type="text" placeholder="Search">
             </div>
 
-                <div class="nav-user-icon online">
+                <div class="nav-user-icon">
                     <a href='{% url "user_posts" request.user.username %}'>
                     {% if request.user.extrauser.profile_picture %}
                         <img src="{{ request.user.extrauser.profile_picture.url }}">
@@ -62,28 +62,17 @@
         </div>
         {% endif %}
          <!--------main content-------------->
+        <div class='main-container'>
         <div class="main-content">
             {% block content %}
 
             {% endblock %}
 
         </div>
-            <!--------right sidebar-------------->
-            {% if user.is_authenticated %}
-        <div class="right-sidebar">
-
-        
-        <div class="sidebar-title">
-            <h4>Advertisement:</h4>
-            <a href="#">close</a>
-        </div>
-        <img src="{% static 'images/huh cat.jpg'%}" class="sidebar-ads">  
-    </div>
-
-    </div>
-    {% endif %}
+      </div>
+            
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
+    {% block override_js %}
     <script>
         
         function followUser(userId) {
@@ -179,7 +168,6 @@ span1.onclick = function() {
 
 // When the user clicks anywhere outside of the modal, close it
 
-
 // Get the modal
 var modal2 = document.getElementById("myModal2");
 
@@ -190,29 +178,34 @@ var btn2 = document.getElementById("openModal2");
 var span2 = document.getElementById("closeModal2");
 
 // When the user clicks on the button, open the modal 
+if (btn2) {
 btn2.onclick = function() {
   modal2.style.display = "block";
 }
-
+}
 // When the user clicks on <span> (x), close the modal
+if (span2) {
 span2.onclick = function() {
   modal2.style.display = "none";
 }
-
+}
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-  if (event.target == modal1) {
-    modal1.style.display = "none";
-  }
+
   if (event.target == modal2) {
     modal2.style.display = "none";
+  }
+
+  if (event.target == modal1) {
+    modal1.style.display = "none";
+    
   }
 }
 
 
     
-    </script>
-
+</script>
+{% endblock %}
 
 </body>
 </html>

@@ -33,7 +33,7 @@ nav{
 .logo{
     width: 160px; 
     margin-right: 45px;
-
+    color: black;
 }
 .nav-left, .nav-right{
     display: flex;
@@ -96,7 +96,7 @@ nav{
 }
 .container{
     display: flex;
-    justify-content: space-between;
+    flex-direction: left;
     padding: 13px 5%;
 }
 
@@ -105,7 +105,7 @@ flex-basis: 25%;
 position: sticky;
 top: 70px;
 align-self: flex-start;
-
+display: block;
 
 }
 .right-sidebar{
@@ -120,10 +120,7 @@ align-self: flex-start;
     margin-left: 1em;
     }
 
-    .main-content{
-        flex-basis: 47%;
 
-    }
     .imp-links a, .shortcut-links a{
         text-decoration: none;
         display: flex;
@@ -302,10 +299,104 @@ width: 35px;
     color: #626262;
     font-size: 24px;
 }
+
+.write-post-container input {
+    width: 80%;
+    height: 40px;
+    translate: 0 -15px;
+}
+
+@media screen and (max-width: 1110px) {
+    div.left-sidebar {
+        display: none;
+    }
+    div.right-sidebar {
+        display: none;
+    }
+
+    .post-container{
+        max-width: 50vw;
+        background: #fff;
+        padding: 20px;
+        color: #626262;
+        border-radius: 6px;
+    
+    }
+
+    .write-post-container {
+        min-width: 30vw;
+    }
+
+    div.search-box {
+        display: none;
+    }
+
+    div.container {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    div.index {
+        margin: 0 auto;
+        display: inline-block;
+    }
+
+    div.main-content {
+        margin: 0 12vw;
+    }
+
+    div.user-profile {
+        min-width: 70vw;
+    }
+
+  }
+
+  @media screen and (min-width: 1111px) {
+    left-sidebar {
+        display: block;
+    }
+    right-sidebar {
+        display: block;
+    }
+  }
+
+  @media screen and (max-width: 850px) {
+    .card .profile {
+        width: 100px;
+          height: 100px;
+          border-radius: 50%;
+          margin-bottom: 5px;
+          box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.146);
+      }
+    
+      .card .username {
+        font-family: Helvetica, sans-serif;
+        font-size: 12px;
+      }
+    
+      .card {
+        border: 1px solid hsl(0, 0%, 58%);
+        border-radius: 10px;
+        box-shadow: 5px 5px 5px hsla(0, 0%, 0%, 0.1);
+        background-color: #fcfffd;
+        margin: 5px;
+        padding: 10px;
+        text-align: center;
+        width: auto;
+        min-width: 100px;
+        height: auto;
+        overflow-x: hidden;
+        max-height: 150px;
+        display: inline-block;
+        transition: translate 0.3s ease, translate 0.3s ease;
+      }
+    
+  }
+
 .user-profile{
     display: flex;
     align-items: center;
-
 }
 .user-profile img{
     width: 45px;
@@ -322,6 +413,8 @@ width: 35px;
     font-size: 12px;
 
 }
+
+
 .post-input-container{
     padding-left: 55px;
     padding-top: 20px;
@@ -334,8 +427,14 @@ width: 35px;
     border-bottom: 1px solid #ccc;
     background: transparent;
     resize: none;
-    font-size: 20px;
+    font-size: 16px;
 }
+
+.post-input-container input {
+    outline: 0;
+    width: 100%;
+}
+
 .add-post-links{
     display: flex;
     margin-top: 10px;
@@ -361,13 +460,21 @@ width: 35px;
 
 }
 
-.user-container{
-    width: 100%;
+.post-card-container{
+    width: clamp(50vw, 15vw, 5vw);
     background: #fff;
     padding: 20px;
     color: #626262;
     border-radius: 6px;
+}
 
+.user-container{
+    min-width: 50vw;
+    width: auto;
+    background: #fff;
+    padding: 20px;
+    color: #626262;
+    border-radius: 6px;
 }
 
 .user-container a {
@@ -407,7 +514,8 @@ button {
     text-decoration: none;
 }
 .post-img{
-    width: 100%;
+    width: auto;
+    max-width: 30vw;
     border-radius: 4px;
     margin-bottom: 5px;
 
@@ -469,7 +577,7 @@ color: #9a9a9a;
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
-    width: 45vw;
+    width: clamp(65vw ,35vw, 25vw);
     min-width: 600px;
     -webkit-overflow-scrolling: touch;
     background-color: #FFFFFF;

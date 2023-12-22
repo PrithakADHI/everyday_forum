@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    <div classs='post-container'>
+<div class='index'>
+    <div classs='post-card-container'>
     <div class='card-container' style='padding-top: 1em;'>
         <h3 style='padding-left: 10px;'>People You Follow</h3>
     {% for follower in followings %}
@@ -22,37 +23,37 @@
 </div>
 
 <div class="write-post-container">
-    <div class="user-profile">
-        {% if request.user.extrauser.profile_picture %}
-    <img src='{{ request.user.extrauser.profile_picture.url }}' class='profile' style='width: 2em; height: 2em;' /> 
+    {% if request.user.extrauser.profile_picture %}
+    <img src='{{ request.user.extrauser.profile_picture.url }}' style='width: 2em; height: 2em; border-radius: 50%;' /> 
     {% else %}
-    <img src='{% static "images/default.jpg" %}' class='profile' style='width: 2em; height: 2em;' />
+    <img src='{% static "images/default.jpg" %}' class='profile' style='width: 2em; height: 2em; border-radius: 50%;' />
     {% endif %}
-        <div>
-            <p>{{ request.user.username }}</p>
-        </div>
-    </div>
-
-    <div class="post-input-container">
-<textarea rows="3" placeholder="What's on your mind?"></textarea>
-
-<div class="add-post-links">
-    <a> Post? </a>
+    <span><input id='openModal1' placeholder="&nbsp;What's on your mind?" /></span>
 </div>
 
+<div id='myModal1' class='modal'>
+    <div class='modal-content'>
+        <span id='closeModal1'>&times;</span>
+        <p class='heading'> Post Something </p>
+        <form method='POST' enctype='multipart/form-data'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type='submit'> Post </button>
+        </form>
     </div>
-
 </div>
 
-{% for post in random_posts %}
+    {% for post in random_posts %}
 <div class="post-container" style='margin-top: 1em;'>
     <div class="post-row">
         <div class="user-profile">
-            {% if post.user.extrauser.profile_picture %}
+        <a href='{% url "user_posts" post.user.username %}'>
+        {% if post.user.extrauser.profile_picture %}
         <img src='{{ post.user.extrauser.profile_picture.url }}' class='post-profile'>
         {% else %}
         <img src='{% static "images/default.jpg" %}' class='post-profile'>
         {% endif %}
+        </a>
             <div>
                 <p>{{post.user.username}}</p>
                 <small>{{ post.created_at }}</small>
@@ -76,3 +77,19 @@
 {% endfor %}
 
 {% endblock %}
+
+
+<form method='POST' enctype='multipart/form-data'>
+    {% csrf_token %}
+<div class="post-input-container">
+{{ form.as_p }}
+
+<div class="add-post-links">
+<button type='submit'> Add Post </button>
+</div>
+
+</div>
+
+</div>
+</form>
+</div>

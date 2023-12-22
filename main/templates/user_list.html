@@ -5,14 +5,14 @@
 {% load static %}
 
 {% block content %}
-
+<div class='user-container'>
 <h2 class='header'>User List</h2>
 
     {% for data in user_data %}
         <div class='card'>
         <a href='{% url "user_posts" data.user.username %}'>
         {% if data.user.extrauser.profile_picture %}
-        <img src="{{ data.user.extrauser.profile_picture.url }}" alt="{{ data.user.username }}'s profile picture" class='w3-circle profile'>
+        <img src="{{ data.user.extrauser.profile_picture.url }}" alt="{{ data.user.username }}'s profile picture" class='profile'>
         {% else %}
         <img src='{% static "images/default.jpg" %}' alt="{{ data.user.username }}'s Profile Picture" class='w3-circle profile'>
         {% endif %}
@@ -20,4 +20,6 @@
         </a>
       </div>
     {% endfor %}
+
+    </div>
 {% endblock %}

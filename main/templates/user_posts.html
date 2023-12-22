@@ -11,7 +11,7 @@
     {% if user.extrauser.profile_picture %}
     <img src='{{ user.extrauser.profile_picture.url }}' class='profile' style='width: 5em; height: 5em;'> {{ user.username }}
     {% else %}
-    <h1> <img src='{% static "images/default.jpg" %}' style='width: 3em; height: 3em;' class='w3-circle'> {{ user.username }} </h1>
+    <img src='{% static "images/default.jpg" %}' style='width: 5em; height: 5em;' class='w3-circle'> {{ user.username }}
     {% endif %}
     </div>
 </div>
