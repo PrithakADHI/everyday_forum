@@ -22,9 +22,29 @@ def index(request):
             random_posts = Post.objects.filter(user__in=followed_users).order_by("?")[:15]
         else:
             random_posts = []
+
+        latest_post = Post.objects.filter(user=request.user).order_by('-created_at').first()
+
+        if request.method == "POST":
+            form = MakePost(request.POST, request.FILES)
+            if form.is_valid():
+                form_title = form.cleaned_data["title"]
+                form_content = form.cleaned_data["content"]
+                current_user = request.user
+                current_time = datetime.now()
+                if 'picture' in request.FILES:
+                    Post(user=current_user, created_at=current_time, title=form_title, content=form_content, picture=request.FILES['picture']).save()
+                else:
+                    Post(user=current_user, created_at=current_time, title=form_title, content=form_content, picture=None).save()
+                return redirect('index')
+        else:
+            form = MakePost()
+        
     else:
         return redirect('login')
-    return render(request, 'index.html', {'posts': posts, 'followings': following_users, 'user_profile': profile_picture, 'random_posts': random_posts})
+        
+
+    return render(request, 'index.html', {'posts': posts, 'followings': following_users, 'user_profile': profile_picture, 'random_posts': random_posts, 'form': form, 'latest_post': latest_post})
 
 def tests(request):
     return render(request, 'tests.html')
@@ -100,7 +120,6 @@ def delete_comment(request, comment_id):
         return redirect(request.META.get('HTTP_REFERER', '/default-url/'))
 
 # For Posts
-
 def user_posts(request, username):
     user = get_object_or_404(User, username=username)
     posts = Post.objects.filter(user=user)
@@ -110,12 +129,17 @@ def user_posts(request, username):
 
     is_following = Follower.is_following(request.user, user)
 
+    following = Follower.objects.filter(user=user)
+    followers = Follower.objects.filter(following=user)
+
     context = {
         'user': user,
         'posts': posts,
         'followers_count': followers_count,
         'following_count': following_count,
         'is_following': is_following,
+        'following': following,
+        'followers': followers,
     }
 
     return render(request, 'user_posts.html', context)

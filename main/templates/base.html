@@ -34,14 +34,11 @@
 <div onclick='w3_open()'><a class='w3-bar-item w3-padding-16 w3-right'><img src='{% static "images/default.jpg" %}' class='w3-circle profile-picture'></a></div>
 {% endif %}
 
-<a href="{% url 'user_list' %}" class='w3-button w3-padding-16 w3-left size w3-bar-item w3-button w3-padding-32 w3-right' style='color: white;'> <i class='fa fa-user-circle-o' style='font-size: 20px;'> </i> </a>  
-
-<a href="{% url 'post_add' %}" class='w3-bar-item w3-button w3-padding-32 w3-right'  style='color: white;'> <i class='fa fa-plus-circle' style='font-size: 20px;'></i> </a>    
+<a href="{% url 'user_list' %}" class='w3-button w3-padding-16 w3-left size w3-bar-item w3-button w3-padding-32' style='color: white;'> <i class='fa fa-users' style='font-size: 20px;'> </i> </a>    
 
 {% endif %}
 </div>
-
-<div style=' margin-bottom: 100px; '> </div>
+<div class='main-container'>
 
 
 {% block content %}
@@ -123,5 +120,61 @@
       }
     });
   });
+
+  // Get the modal
+var modal1 = document.getElementById("myModal1");
+
+// Get the button that opens the modal
+var btn1 = document.getElementById("openModal1");
+
+// Get the <span> element that closes the modal
+var span1 = document.getElementById("closeModal1");
+
+// When the user clicks on the button, open the modal 
+btn1.onclick = function() {
+  modal1.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span1.onclick = function() {
+  modal1.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+
+// Get the modal
+var modal2 = document.getElementById("myModal2");
+
+// Get the button that opens the modal
+var btn2 = document.getElementById("openModal2");
+
+// Get the <span> element that closes the modal
+var span2 = document.getElementById("closeModal2");
+
+// When the user clicks on the button, open the modal 
+if (btn2) {
+btn2.onclick = function() {
+  modal2.style.display = "block";
+}
+}
+// When the user clicks on <span> (x), close the modal
+if (span2) {
+span2.onclick = function() {
+  modal2.style.display = "none";
+}
+}
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+
+  if (event.target == modal2) {
+    modal2.style.display = "none";
+  }
+
+  if (event.target == modal1) {
+    modal1.style.display = "none";
+    
+  }
+}
+
 
 </script>
