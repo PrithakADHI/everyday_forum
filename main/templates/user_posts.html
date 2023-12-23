@@ -7,7 +7,8 @@
 
 <div style='margin-top: 3em;'>
 
-<div style='margin-left: 2em;'>
+<div class='random-posts'>
+<div style='padding-left: 10px; padding-bottom: 20px;'>
 {% if user.extrauser.profile_picture %}
 <h1> <img src='{{ user.extrauser.profile_picture.url }}' style='width: 3em; height: 3em;' class='w3-circle'> {{ user.username }} </h1>
 {% else %}
@@ -21,10 +22,12 @@
 <a id="followLink" href="#" onclick="return followUser({{ user.id }})" style='padding-left: 5px;'>Follow</a>
 {% endif %}
 {% endif %}
-<button id="openModal1">Following: <span id='followerCount'> {{ followers_count }}</span> </button> | <button id="openModal2">Followers: <span id='followingCount'> {{ following_count }}</span> </button>
+<br>
+<button id="openModal1" class='follower'>Following: <span id='followerCount'> {{ followers_count }}</span> </button> | <button id="openModal2">Followers: <span id='followingCount'> {{ following_count }}</span> </button>
+</div>
 </div>
         {% for post in posts %}
-
+        <a href='{% url "post_details" post.slug %}'>
         <div class='random-posts'>
             <div class='post'>
             {% if post.user.extrauser.profile_picture %}
@@ -37,9 +40,7 @@
                 {{ post.created_at }}
             </div>
         
-            <div class='content'>
-                {{post.content}}
-            </div>
+            <div class='content'>{{post.content}}</div>
         
             <div class='post-image'>
                 {% if post.picture %}
@@ -49,6 +50,7 @@
         
         </div>
         </div>
+    </a>
         {% endfor %}
 </div>
 

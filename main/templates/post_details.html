@@ -5,8 +5,7 @@
 
 {% block content %}
 
-<div class='w3-container'>
-<div class='comment-container'>
+<div class='random-posts'>
 <h2 style='font: helvetica; font-weight: bold;'> {{ post.title }} </h2>
 {% if post.user.extrauser.profile_picture %}
 <a href='{% url "user_posts" post.user.username %}'> <img src='{{ post.user.extrauser.profile_picture.url }}' class='profile-picture w3-circle'> {{ post.user }}</a>
@@ -18,7 +17,9 @@
 <div style='white-space: pre-line; '> {{ post.content }} </div>
 
 {% if post.picture %}
-<img src='{{ post.picture.url }}' class='post-image'>
+<div class='post-image'>
+<img src='{{ post.picture.url }}'>
+</div>
 {% endif %}
 
 <div style='margin-top: 20px;'>
@@ -26,7 +27,6 @@
 {% if user.is_authenticated and user == post.user %}
 <a href="{% url 'post_delete' post.pk %}"> Delete </a>
 {% endif %} 
-</div>
 </div>
 </div>
 <div class='random-posts' style='padding-left: 15px;'>
@@ -37,15 +37,15 @@
     {% endfor %}
     </ul>
 {% endif %}
-<div class='comments-container'>
-<div class='comment-container'>
+
+
 <form method='POST' id='commentForm'>
 {% csrf_token %}
 <h2 style='font-family: helvetica; font-weight: bold;'> Write a Comment </h2>
 {{ form.comment }} <br>
 <button type='submit'> Submit </button>
 </form>
-</div>
+
 {% for comment in comments %}
 <div class='comment-container'>
 {% if comment.user.extrauser.profile_picture %}
@@ -59,7 +59,7 @@
 {% endif %}
 </div>
 {% endfor %}
-</div>
+
 <script>
 function resizeTextarea() {
     const textarea = document.getElementById('expandingTextarea');
