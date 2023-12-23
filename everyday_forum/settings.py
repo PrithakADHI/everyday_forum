@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-o+=p(qp)-e!(m_jqat8((vm85fh8*(b_7l!m_@o=#lm$bq%@=@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'prithak.loca.lt', '0.tcp.in.ngrok.io']
+ALLOWED_HOSTS = ['localhost', 'prithak.loca.lt', '0.tcp.in.ngrok.io', '.vercel.app']
 CSRF_TRUSTED_ORIGINS = ['https://prithak.loca.lt', 'http://0.tcp.in.ngrok.io']
 
 
