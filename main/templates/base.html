@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href='{% static "css/global.css" %}'>
 <link rel='stylesheet' type='text/css' href='{% static "css/w3.css" %}'>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="icon" type="image/x-icon" href="{% static 'images/favicon.png' %} ">
 </head>
 <nav class="w3-sidebar w3-right w3-bar-block w3-card w3-top w3-xlarge w3-animate-right" style="display:none;right:0;width:20%;min-width:200px" id="Profile">
     <div style='padding-top: 100px;'>
@@ -23,8 +24,9 @@
       {% endif %}
   </div>
 </nav>
-<div class='w3-bar' style='background-color: #1d3557; z-index:10000; position: fixed; top:0px; width:100%;'>
+<div class='w3-bar' style='background-color: #279af1; z-index:10000; position: fixed; top:0px; width:100%;'>
 <a href="{% url 'index' %}" class='w3-bar-item w3-button w3-padding-32' style='color: white; font-family: Helvetica; font-weight: bold;'> Everyday Forum </a>
+<a href='{% url  "notification" %}'><i class="fa fa-bell w3-bar-item w3-button w3-padding-32" aria-hidden="true" style='color: white; font-size: 22px;'></i></a>
 
 {% if user.is_authenticated %}
 
@@ -34,14 +36,11 @@
 <div onclick='w3_open()'><a class='w3-bar-item w3-padding-16 w3-right'><img src='{% static "images/default.jpg" %}' class='w3-circle profile-picture'></a></div>
 {% endif %}
 
-<a href="{% url 'user_list' %}" class='w3-button w3-padding-16 w3-left size w3-bar-item w3-button w3-padding-32 w3-right' style='color: white;'> <i class='fa fa-user-circle-o' style='font-size: 20px;'> </i> </a>  
-
-<a href="{% url 'post_add' %}" class='w3-bar-item w3-button w3-padding-32 w3-right'  style='color: white;'> <i class='fa fa-plus-circle' style='font-size: 20px;'></i> </a>    
+<a href="{% url 'user_list' %}" class='w3-button w3-padding-16 w3-left size w3-bar-item w3-button w3-padding-32' style='color: white;'> <i class='fa fa-users' style='font-size: 20px;'> </i> </a>    
 
 {% endif %}
 </div>
-
-<div style=' margin-bottom: 100px; '> </div>
+<div class='main-container'>
 
 
 {% block content %}
@@ -123,5 +122,61 @@
       }
     });
   });
+
+  // Get the modal
+var modal1 = document.getElementById("myModal1");
+
+// Get the button that opens the modal
+var btn1 = document.getElementById("openModal1");
+
+// Get the <span> element that closes the modal
+var span1 = document.getElementById("closeModal1");
+
+// When the user clicks on the button, open the modal 
+btn1.onclick = function() {
+  modal1.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span1.onclick = function() {
+  modal1.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+
+// Get the modal
+var modal2 = document.getElementById("myModal2");
+
+// Get the button that opens the modal
+var btn2 = document.getElementById("openModal2");
+
+// Get the <span> element that closes the modal
+var span2 = document.getElementById("closeModal2");
+
+// When the user clicks on the button, open the modal 
+if (btn2) {
+btn2.onclick = function() {
+  modal2.style.display = "block";
+}
+}
+// When the user clicks on <span> (x), close the modal
+if (span2) {
+span2.onclick = function() {
+  modal2.style.display = "none";
+}
+}
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+
+  if (event.target == modal2) {
+    modal2.style.display = "none";
+  }
+
+  if (event.target == modal1) {
+    modal1.style.display = "none";
+    
+  }
+}
+
 
 </script>

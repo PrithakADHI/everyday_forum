@@ -5,10 +5,12 @@
 {% block title %} Everyday Forum - Home {% endblock %}
 
 {% block content %}
+
+<div class='card-container'>
+
 {% if user.is_authenticated %} <br>
 
 {% if followings %}
-
 {% for follower in followings %}
 <a href='{% url "user_posts" follower.following.username %}'>
 <div class='card'>
@@ -21,43 +23,117 @@
 </div>
 </a>
 {% endfor %}
-
+</div>
+<br>
+<div class='write-post'>
+{% if request.user.extrauser.profile_picture %}
+<img class='w3-circle post-profile' src='{{ request.user.extrauser.profile_picture.url }}'> &nbsp;{{request.user.username}}
+{% else %}
+<img class='w3-circle post-profile' src='{% static "images/default.jpg" %}'> &nbsp; {{request.user.username}}
+{% endif %} <br><br>
+<input id="openModal1" class='post-textarea' placeholder="What's on your mind?"></textarea>
 <br><br>
+</div>
+<br>
+{% if latest_post %}
 <div class='random-posts'>
+    <div class='post'>
+    <a href='{% url "user_posts" request.user.username %}'>
+        <div class='random-ass-picture'>
+    {% if request.user.extrauser.profile_picture %}
+    <img class='w3-circle post-profile' src='{{ request.user.extrauser.profile_picture.url }}'> &nbsp;
+    {% else %}
+    <img class='w3-circle post-profile' src='{% static "images/default.jpg" %}'> &nbsp;
+    {% endif %}
+        </div>
+    <div class='username'>
+        {{request.user.username}} <br>
+    </a>
+    <a href='{% url "post_details" latest_post.slug %}'>
+        {{latest_post.created_at}}
+    
+    </div>
 
-<div style='padding-top: 25px;'>
+    <div class='content'>{{latest_post.content}}</div>
 
-{% if random_posts %}
-<h2 class='heading'> Random Posts from People You Follow </h2>
+    <div class='post-image'>
+        {% if latest_post.picture %}
+        <img src='{{ latest_post.picture.url }}'>
+        {% endif %}
+    </div>
+</a>
+</div>
+</div>
 {% endif %}
 {% for post in random_posts %}
 
+<div class='random-posts'>
+    <a href='{% url "user_posts" post.user.username %}'>
+    <div class='post'>
+    {% if post.user.extrauser.profile_picture %}
+    <img class='w3-circle post-profile' src='{{ post.user.extrauser.profile_picture.url }}'> &nbsp;
+    {% else %}
+    <img class='w3-circle post-profile' src='{% static "images/default.jpg" %}'> &nbsp;
+    {% endif %}
+    <div class='username'>
+        {{post.user.username}} <br>
+    </a>
+        <a href='{% url "post_details" post.slug %}'>
+        {{ post.created_at }}
+        
+    </div>
 
-    <a href="{{ post.get_absolute_url }}">
-        <div class='post-card' style='word-wrap: break-word;'>
-        {% if post.user.extrauser.profile_picture %}
-        <img src='{{ post.user.extrauser.profile_picture.url }}' class='post-profile'>
-        {% else %}
-        <img src='{% static "images/default.jpg" %}' class='post-profile'>
+    <div class='content'>{{post.content}}</div>
+
+    <div class='post-image'>
+        {% if post.picture %}
+        <img src='{{ post.picture.url }}'>
         {% endif %}
-        <p> {{ post.user.username }} </p>
-        <h2>{{ post.title|slice:":8" }}{% if post.title|length  > 8 %}...{% endif %}</h2>
-    
-        <p>{{ post.content|slice:":16" }}{% if post.content|length > 16 %}...{%endif%}</p>
+    </div>
+</a>
 </div>
-
+</div>
 {% endfor %}
 
-</div>
-
-</div>
 
 {% else %}
-
+<div class='random-posts'>
 Nothing to See here... <br>
 Please Click the User Sign on Top to Follow someone.. 
+</div>
+<div class='write-post'>
+    {% if request.user.extrauser.profile_picture %}
+    <img class='w3-circle post-profile' src='{{ request.user.extrauser.profile_picture.url }}'> &nbsp;{{request.user.username}}
+    {% else %}
+    <img class='w3-circle post-profile' src='{% static "images/default.jpg" %}'> &nbsp; {{request.user.username}}
+    {% endif %} <br><br>
+    <input id="openModal1" class='post-textarea' placeholder="What's on your mind?"></textarea>
+    <br><br>
+    </div>
+    
 
 {% endif %}
 
 {% endif %}
+
+<div id="myModal1" class="modal">
+    <div class="modal-content">
+      <span id="closeModal1">&times;</span>
+      <p class='heading'>Add a Post</p>
+      <form method='POST' enctype="multipart/form-data">
+
+        {% csrf_token %}
+        
+        <label for='title' class='login-username'>Title:
+        {{ form.title }}</label> <br> <br>
+        <label for='title' class='login-username'>Content: <br>
+            {{ form.content }} <br> <br>
+        <label for='picture' class='login-username'>Upload a Picture: <br>
+            {{ form.picture }} <br><br>
+            
+        <button type='submit'>Add Post</button>
+
+        </form>
+    </div>
+  </div>
 {% endblock %}

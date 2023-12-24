@@ -1,7 +1,7 @@
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #f1faee;
+    background-color: #E1E1E1;
   }
   
   .topnav {
@@ -90,6 +90,21 @@ button:disabled {
   cursor: not-allowed;
 }
 
+.write-post {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  border-radius: 4px;
+  width: clamp(350px, 50vw, 75vw);
+  padding-left: 10px;
+}
+
+
+.write-post .post-textarea {
+  margin-left: 70px;
+  width:100%;margin:-3px;border:2px inset #eee'
+}
+
 .header {
   font-family: Helvetica, sans-serif;
   font-size: 26px;
@@ -107,6 +122,14 @@ button:disabled {
 
 .post-card:hover {
   translate: 0 -10px;
+}
+
+.random-ass-picture {
+  display: inline-block;
+}
+
+.random-posts .username {
+  display: inline-block;
 }
 
 .card .profile {
@@ -147,11 +170,6 @@ button:disabled {
 
 .login-card {
 
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
     text-align: center;
     border: 1px solid hsl(0, 0%, 58%);
     border-radius: 10px;
@@ -160,7 +178,7 @@ button:disabled {
     padding: 20px;
     text-align: center;
     width: auto;
-    min-width: 500px;
+    min-width: 300px;
     height: auto;
     display: inline-block;
 }
@@ -234,11 +252,15 @@ textarea:focus {
 }
 
 .random-posts {
-  background-color: #d8f2cf;
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
+  background-color: white;
+  width: clamp(350px, 50vw, 75vw);
+  margin-top: 10px;
+  padding-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
 }
+
+
 
 .post-profile {
   width: 60px;
@@ -255,7 +277,7 @@ textarea:focus {
   margin: 10px;
   padding: 20px;
   text-align: center;
-  width: 150px;
+  min-width: 150px;
   height: auto;
   max-height: 300px;
   display: inline-block;
@@ -276,12 +298,39 @@ textarea:focus {
   transition: translate 0.3s ease, translate 0.3s ease;
 }
 
-  .random-posts .heading {
-    font-size: 24px;
-    padding-left: 10px;
-    font-family: Helvetica, sans-serif;
-    font-weight: bold;
-  }
+.random-posts .post {
+  padding-left: 10px;
+  padding-bottom: 20px;
+}
+
+.main-container {
+  padding-top: 100px;
+  display: block;
+  margin: auto;
+  width: clamp( 350px, 50vw, 75vw )
+}
+
+.card-container {
+  width: clamp(350px, 50vw, 75vw);
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  background-color: white;
+  border-radius: 4px;
+  padding-bottom: 30px;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;
+}
+
+.card-container::-webkit-scrollbar {
+  display: none;
+}
+
+.content {
+  padding-top: 1em;
+  white-space: pre-wrap;
+  padding-left: 2em;
+}
 
 .comment {
   resize: none;
@@ -323,11 +372,95 @@ textarea:focus {
   display: inline-block;
 }
 
-.post-image {
+.post-image img{
   box-shadow: 5px 5px 5px hsla(0, 0%, 0%, 0.1);
-  width: 70vw;
+  max-width: 80%;
   height: auto;
-  display: inline-block;
+  display: block;
+  margin: 0 auto;
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.post-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  margin-bottom: 100px;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.post-modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+  height: auto;
+}
+
+/* Close Button */
+#closeModal1 {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+#closeModal1:hover,
+#closeModal:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#closeModal2 {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+#closeModal2:hover,
+#closeModal:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal .heading {
+  font-size: 24px;
+}
+
+.modal a {
+  text-decoration: none;
+  color: black;
 }
 
 /* Gradient background (uncomment and adjust as needed) */

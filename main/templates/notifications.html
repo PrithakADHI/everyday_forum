@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% for notification in notifications %}
+
+{% if notification.get_absolute_url %}
+<a href='{{ notification.get_absolute_url }}'><p> {{ notification.content }} </p></a>
+{% else %}
+<p> {{ notification.content }} </p>
+{% endif %}
+
+{% endfor %}
+
+{% endblock %}

@@ -8,16 +8,20 @@
 
 <h2 class='header'>User List</h2>
 
+    <div class='random-posts' style='padding-bottom: 10px;'>
     {% for data in user_data %}
+    <a href='{% url "user_posts" data.user.username %}'>
         <div class='card'>
-        <a href='{% url "user_posts" data.user.username %}'>
         {% if data.user.extrauser.profile_picture %}
         <img src="{{ data.user.extrauser.profile_picture.url }}" alt="{{ data.user.username }}'s profile picture" class='w3-circle profile'>
         {% else %}
         <img src='{% static "images/default.jpg" %}' alt="{{ data.user.username }}'s Profile Picture" class='w3-circle profile'>
         {% endif %}
-        <p class='username' style='margin:0'>{{ data.user.username }} </p>
-        </a>
+        <p>{{ data.user.username }} </p>
+      
       </div>
+    </a>
     {% endfor %}
+    </div>
+
 {% endblock %}

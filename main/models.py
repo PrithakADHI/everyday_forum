@@ -62,3 +62,16 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     comment = models.TextField(max_length=600)
+
+
+
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, null=True, on_delete=models.CASCADE)
+    content = models.TextField()
+    url = models.CharField(max_length=255, null=True)
+
+    def get_absolute_url(self):
+        if self.post:
+            return self.post.get_absolute_url()
+        return '#'
