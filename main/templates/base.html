@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href='{% static "css/global.css" %}'>
 <link rel='stylesheet' type='text/css' href='{% static "css/w3.css" %}'>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="icon" type="image/x-icon" href="{% static 'images/favicon.png' %} ">
 </head>
 <nav class="w3-sidebar w3-right w3-bar-block w3-card w3-top w3-xlarge w3-animate-right" style="display:none;right:0;width:20%;min-width:200px" id="Profile">
     <div style='padding-top: 100px;'>
@@ -25,6 +26,7 @@
 </nav>
 <div class='w3-bar' style='background-color: #279af1; z-index:10000; position: fixed; top:0px; width:100%;'>
 <a href="{% url 'index' %}" class='w3-bar-item w3-button w3-padding-32' style='color: white; font-family: Helvetica; font-weight: bold;'> Everyday Forum </a>
+<a href='{% url  "notification" %}'><i class="fa fa-bell w3-bar-item w3-button w3-padding-32" aria-hidden="true" style='color: white; font-size: 22px;'></i></a>
 
 {% if user.is_authenticated %}
 

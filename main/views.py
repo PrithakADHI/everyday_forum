@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
-from .models import User, Follower, Post, ExtraUser, Comment
+from .models import User, Follower, Post, ExtraUser, Comment, Notification
 
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
@@ -96,6 +96,11 @@ def add_follower_ajax(request, follower_id):
         followers_count = Follower.get_followers_count(follower)
         following_count = Follower.get_following_count(follower)
 
+        notification_user = follower
+        notification_content = f"{ request.user.username } has followed you."
+
+        Notification.objects.create(user=notification_user, content=notification_content)
+
         # Return a JSON response indicating success
         return JsonResponse({'status': 'success', 'followerCount': followers_count, 'followingCount': following_count})
     return JsonResponse({'status': 'error'})
@@ -154,6 +159,13 @@ def post_details(request, post_slug):
     if form.is_valid():
         form_comment = form.cleaned_data["comment"]
         Comment(user=request.user, post=post, comment=form_comment).save()
+
+        notification_user = post.user
+        notification_post = post
+        notification_content = f"{request.user} commented on your post"
+
+        Notification.objects.create(user=notification_user, post=notification_post, content=notification_content)
+
         return redirect('post_details', post_slug=post.slug)
     else:
         form = CommentForm(initial={'comment': default_comment})
@@ -240,3 +252,10 @@ def register_view(request):
         profile_form = ProfilePictureForm()
 
     return render(request, 'register.html', {'form': form, 'profile_form': profile_form})
+
+# For the Notification System
+
+def notifications(request):
+    notifications = Notification.objects.filter(user=request.user)
+
+    return render(request, 'notifications.html', {'notifications': notifications})
