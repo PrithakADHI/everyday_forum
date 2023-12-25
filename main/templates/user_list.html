@@ -7,7 +7,7 @@
 {% block content %}
 
 <h2 class='header'>User List</h2>
-
+  
     <div class='random-posts' style='padding-bottom: 10px;'>
     {% for data in user_data %}
     <a href='{% url "user_posts" data.user.username %}'>

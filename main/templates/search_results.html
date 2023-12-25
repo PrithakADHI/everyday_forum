@@ -1,12 +1,30 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 
-<h2>Search Results for "{{ query }}"</h2>
-    <ul>
+<div class='random-posts' style='padding-bottom: 10px;'>
+
+<div class='search-button' style='margin-top: 5px;'>
+    <form action="{% url 'search_results' %}" method="get">
+        <input type="text" name="query" placeholder="Search..." class='' style='width: 80%; margin-left: 10%;'>
+    </form>
+</div>
+        
+<h2 style='padding-left: 10px;'>Search Results for "{{ query }}"</h2>
         {% for user in results %}
-            <a href='{% url "user_posts" user.username %}'><li>{{ user.username }}</li></a>
+        <a href='{% url "user_posts" user.username %}'>
+        <div class='card'>
+        {% if user.extrauser.profile_picture %}
+                <img src='{{ user.extrauser.profile_picture.url }}' class='w3-circle profile'>
+            {% else %}
+                <img src='{% static "images/default.jpg" %}' class='w3-circle profile'>
+            {% endif %}
+            <p>{{ user.username }}</p>
+        </div>
+    </a>
         {% endfor %}
-</ul>
+        
+    
+</div>
 
 {% endblock %}

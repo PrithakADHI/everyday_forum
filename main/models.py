@@ -63,7 +63,10 @@ class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     comment = models.TextField(max_length=600)
 
-
+class Reply(models.Model):
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.CharField(max_length=600)
 
 class Notification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

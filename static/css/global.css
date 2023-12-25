@@ -1,7 +1,7 @@
 body {
     margin: 0;
     font-family: Helvetica, sans-serif;
-    background-color: #E1E1E1;
+    background-color: #E9EDF1;
   }
   
   .topnav {
@@ -164,6 +164,12 @@ button:disabled {
   height: 3em;
 }
 
+.reply-container {
+  margin-left: 10px;
+  padding-left: 10px;
+  border-left: 1px solid black;
+}
+
 .profile-picture:hover {
   cursor: pointer;
 }
@@ -237,6 +243,7 @@ input {
 textarea {
   resize: none;
   width: 100%;
+  background-color: #E9EDF1;
   padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;
@@ -244,6 +251,29 @@ textarea {
   -webkit-transition: 0.3s;
   transition: 0.3s ease-in-out;
   outline: none;
+  border-radius: 10px;
+}
+
+.reply-textarea {
+  background-color: #E9EDF1;
+  height: 55px;
+  border-radius: 10px;
+  overflow-y: hidden;
+  display: inline-block;
+}
+
+.submit-reply {
+  display: none;
+}
+
+.comment-box {
+  width: clamp(150px, auto, 70vw);
+  background-color: #E9EDF1;
+  border-radius: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  margin-top: 10px;
 }
 
 input:focus {
@@ -308,8 +338,9 @@ textarea:focus {
 
 .main-container {
   padding-top: 100px;
-  display: block;
   margin: auto;
+  display: grid;
+  place-items: center;
   width: clamp( 350px, 60vw, 75vw )
 }
 
@@ -381,6 +412,10 @@ textarea:focus {
     right: 0;
 }
 
+.search-button {
+  display: none;
+}
+
 @media screen and (max-width: 600px) {
   .search-bar {
     display: none;
@@ -391,9 +426,6 @@ textarea:focus {
   }
 }
 
-.search-button {
-  display: none;
-}
 
 .comment-container {
   margin: 10px;

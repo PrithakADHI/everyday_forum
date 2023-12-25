@@ -3,7 +3,7 @@
 {% block content %}
 <div class='random-posts' style='padding-bottom: 20px; padding-left: 10px;'>
 {% for notification in notifications %}
-
+<div class='comment-box' style='width: 80%;'>
 {% if notification.get_absolute_url %}
     <a href='{{ notification.get_absolute_url }}'><p>{{ notification.content }}</p></a>
 {% else %}
@@ -14,7 +14,7 @@
         <p>{{ notification.content }}</p>
     {% endif %}
 {% endif %}
-
+</div>
 {% endfor %}
 </div>
 {% endblock %}

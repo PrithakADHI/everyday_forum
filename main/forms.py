@@ -1,6 +1,6 @@
 from django import forms
 from django.db import IntegrityError
-from .models import Post, ExtraUser, Comment
+from .models import Post, ExtraUser, Comment, Reply
 
 class MakePost(forms.ModelForm):
     class Meta:
@@ -32,3 +32,11 @@ class CommentForm(forms.ModelForm):
 
 class UserSearchForm(forms.ModelForm):
     search_query = forms.CharField(max_length=100)
+
+class ReplyForm(forms.ModelForm):
+    class Meta:
+        model = Reply
+        fields = ['content']
+    def __init__(self, *args, **kwargs):
+        super(ReplyForm, self).__init__(*args, *kwargs)
+        self.fields['content'].widget.attrs.update({ 'class': 'reply-textarea', 'placeholder': '"Reply some nice things"' })

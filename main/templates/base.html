@@ -24,12 +24,14 @@
       {% endif %}
   </div>
 </nav>
-<div class='w3-bar' style='background-color: #279af1; z-index:10000; position: fixed; top:0px; width:100%;'>
+<div class='w3-bar' style='background-color: #7392b7; z-index:10000; position: fixed; top:0px; width:100%;'>
 <a href="{% url 'index' %}" class='w3-bar-item w3-button w3-padding-32' style='color: white; font-family: Helvetica; font-weight: bold;'> Everyday Forum </a>
+{% if user.is_authenticated %}
 {% if notifications.is_read %}
 <a href='{% url  "notification" %}' class='w3-bar-item w3-button w3-padding-32'><i class="fa fa-bell online" aria-hidden="true" style='color: white; font-size: 22px;'></i></a>
 {% else %}
 <a href='{% url  "notification" %}' class='w3-bar-item w3-button w3-padding-32'><i class="fa fa-bell" aria-hidden="true" style='color: white; font-size: 20px;'></i></a>
+{% endif %}
 {% endif %}
 {% if user.is_authenticated %}
 {% if profile_picture %}
@@ -39,13 +41,15 @@
 {% endif %}
 
 <a href="{% url 'user_list' %}" class='w3-button w3-padding-16 w3-left size w3-bar-item w3-button w3-padding-32' style='color: white;'> <i class='fa fa-users' style='font-size: 20px;'> </i> </a>    
+
 <form action="{% url 'search_results' %}" method="get" class='w3-right search-bar'>
   <input type="text" name="query" placeholder="Search..." class='w3-bar-item w3-padding-16' style='margin-top: 13px;'>
 </form>
 {% endif %}
 
+{% if user.is_authenticated %}
 <a href='{% url "search_button" %}' class='w3-bar-item w3-padding-32 w3-right' style='color: white; font-size: 15px;'><i class="fa fa-search search-button"></i></a>
-
+{% endif %}
 </div>
 <div class='main-container'>
 
@@ -140,15 +144,18 @@ var btn1 = document.getElementById("openModal1");
 var span1 = document.getElementById("closeModal1");
 
 // When the user clicks on the button, open the modal 
+if (btn1) {
 btn1.onclick = function() {
   modal1.style.display = "block";
 }
+}
 
+if (span1) {
 // When the user clicks on <span> (x), close the modal
 span1.onclick = function() {
   modal1.style.display = "none";
 }
-
+}
 // When the user clicks anywhere outside of the modal, close it
 
 // Get the modal

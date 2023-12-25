@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
-from .models import User, Follower, Post, ExtraUser, Comment, Notification
+from .models import User, Follower, Post, ExtraUser, Comment, Notification, Reply
 
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm
 
-from .forms import MakePost, ProfilePictureForm, CommentForm, UserSearchForm
+from .forms import MakePost, ProfilePictureForm, CommentForm, ReplyForm
 
 from datetime import datetime
 
@@ -158,25 +158,66 @@ def post_details(request, post_slug):
 
     default_comment = ''
 
-    form = CommentForm(request.POST)
-    if form.is_valid():
-        form_comment = form.cleaned_data["comment"]
-        Comment(user=request.user, post=post, comment=form_comment).save()
+    form = CommentForm()
+    reply_form = ReplyForm()
+    replies = Reply.objects.filter(comment__in=comments)
 
-        notification_user = post.user
+    if 'comment' in request.POST:
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            form_comment = form.cleaned_data["comment"]
+            Comment(user=request.user, post=post, comment=form_comment).save()
+
+            notification_user = post.user
+            notification_sender_user = request.user
+            notification_post = post
+            notification_content = f"{request.user} commented on your post"
+
+            Notification.objects.filter(user=post.user).exclude(user=request.user).update(is_read=True)
+
+            if notification_user != request.user:
+                Notification.objects.create(user=notification_user, post=notification_post, sender_user=notification_sender_user, content=notification_content)
+
+            return redirect('post_details', post_slug=post.slug)
+        else:
+            form = CommentForm(initial={'comment': default_comment})
+    
+    elif 'reply' in request.POST:
+        # Handle reply submission
+        reply_form = ReplyForm(request.POST)
+        comment_id = request.POST.get('comment_id')
+        comment = get_object_or_404(Comment, pk=comment_id)
+
+        notification_user = comment.user
         notification_sender_user = request.user
         notification_post = post
-        notification_content = f"{request.user} commented on your post"
+        notification_content = f"{request.user} has replied to your comment"
 
-        Notification.objects.filter(user=post.user).update(is_read=True)
-
+        Notification.objects.filter(user=comment.user).update(is_read=True)
         Notification.objects.create(user=notification_user, post=notification_post, sender_user=notification_sender_user, content=notification_content)
+        
+        replies = Reply.objects.filter(comment=comment).exclude(user=request.user)
 
-        return redirect('post_details', post_slug=post.slug)
-    else:
-        form = CommentForm(initial={'comment': default_comment})
+        for reply in replies:
+            user = reply.user
+            sender_user = request.user
+            content = f"{request.user} has replied to a comment you replied on. "
+            Notification.objects.filter(user=user).update(is_read=True)
+            Notification.objects.create(user=user, post=post, sender_user=sender_user, content=content)
 
-    return render(request, 'post_details.html', {'post': post, 'comments': comments, 'form': form})
+
+        if reply_form.is_valid():
+            reply_text = reply_form.cleaned_data['content']
+            new_reply = Reply(comment=comment, user=request.user, content=reply_text)
+            new_reply.save()
+            return redirect('post_details', post_slug=post.slug)
+        else:
+            print(reply_form.errors)
+        
+        
+
+
+    return render(request, 'post_details.html', {'post': post, 'comments': comments, 'form': form, 'reply_form': reply_form, 'replies': replies})
 
 def post_add(request):
     if request.method == "POST":
@@ -262,7 +303,7 @@ def register_view(request):
 # For the Notification System
 
 def notifications(request):
-    notifications = Notification.objects.filter(user=request.user)
+    notifications = Notification.objects.filter(user=request.user)[::-1]
 
     Notification.objects.filter(user=request.user).update(is_read=False)
 
