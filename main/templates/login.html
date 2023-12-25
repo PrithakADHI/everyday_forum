@@ -3,12 +3,11 @@
 {% block title %} Login {% endblock %}
 
 {% block content %}
+<div class='login'>
 {% if messages %}
     {% for message in messages %}
-    <ul class="messages">
-        {{ message }}
+        <p>{{ message }}</p>
     {% endfor %}
-    </ul>
     {% endif %}
     <div class='login-card'>
     <h2 class='login-title'>Login</h2>
@@ -21,5 +20,6 @@
         <button type="submit" value="Login" onclick="a()" class='login-button'> Login </button>
     </form>
     <p class='register'> Don't have an account? <a href='{% url "register" %}'> Click Here to Register </a></p>
+</div>
 </div>
 {% endblock %}

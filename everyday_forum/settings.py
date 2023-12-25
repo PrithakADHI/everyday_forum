@@ -26,13 +26,9 @@ SECRET_KEY = 'django-insecure-o+=p(qp)-e!(m_jqat8((vm85fh8*(b_7l!m_@o=#lm$bq%@=@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-<<<<<<< HEAD
-ALLOWED_HOSTS = ['localhost', 'prithak.loca.lt', '0.tcp.in.ngrok.io', '.vercel.app']
-CSRF_TRUSTED_ORIGINS = ['https://prithak.loca.lt', 'http://0.tcp.in.ngrok.io']
-=======
+
 ALLOWED_HOSTS = ['localhost', 'prithak.loca.lt', '0.tcp.in.ngrok.io', 'prithakadhikari.serveo.net']
 CSRF_TRUSTED_ORIGINS = ['https://prithak.loca.lt', 'http://0.tcp.in.ngrok.io', 'https://prithakadhikari.serveo.net']
->>>>>>> new_css_2
 
 
 # Application definition
@@ -75,6 +71,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'main.context_processors.profile_picture',
+                'main.context_processors.notifications',
             ],
         },
     },

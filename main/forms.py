@@ -29,3 +29,6 @@ class CommentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(CommentForm, self).__init__(*args, **kwargs)
         self.fields['comment'].widget.attrs.update({ 'class': 'comment', 'id': 'expandingTextarea', 'oninput': 'resizeTextarea()', 'placeholder': 'Write some nice comments :)' })
+
+class UserSearchForm(forms.ModelForm):
+    search_query = forms.CharField(max_length=100)

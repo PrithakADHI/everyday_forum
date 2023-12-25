@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm
 
-from .forms import MakePost, ProfilePictureForm, CommentForm
+from .forms import MakePost, ProfilePictureForm, CommentForm, UserSearchForm
 
 from datetime import datetime
 
@@ -97,9 +97,12 @@ def add_follower_ajax(request, follower_id):
         following_count = Follower.get_following_count(follower)
 
         notification_user = follower
+        notification_sender_user = request.user
         notification_content = f"{ request.user.username } has followed you."
 
-        Notification.objects.create(user=notification_user, content=notification_content)
+        Notification.objects.create(user=notification_user, content=notification_content, sender_user=notification_sender_user)
+
+        Notification.objects.filter(user=follower).update(is_read=True)
 
         # Return a JSON response indicating success
         return JsonResponse({'status': 'success', 'followerCount': followers_count, 'followingCount': following_count})
@@ -161,10 +164,13 @@ def post_details(request, post_slug):
         Comment(user=request.user, post=post, comment=form_comment).save()
 
         notification_user = post.user
+        notification_sender_user = request.user
         notification_post = post
         notification_content = f"{request.user} commented on your post"
 
-        Notification.objects.create(user=notification_user, post=notification_post, content=notification_content)
+        Notification.objects.filter(user=post.user).update(is_read=True)
+
+        Notification.objects.create(user=notification_user, post=notification_post, sender_user=notification_sender_user, content=notification_content)
 
         return redirect('post_details', post_slug=post.slug)
     else:
@@ -258,4 +264,16 @@ def register_view(request):
 def notifications(request):
     notifications = Notification.objects.filter(user=request.user)
 
+    Notification.objects.filter(user=request.user).update(is_read=False)
+
     return render(request, 'notifications.html', {'notifications': notifications})
+
+# For the Searching System
+
+def search_results(request):
+    query = request.GET.get('query', '')
+    results = User.objects.filter(username__icontains=query)
+    return render(request, 'search_results.html', {'results': results, 'query': query})
+
+def search_button(request):
+    return render(request, 'search_button.html')

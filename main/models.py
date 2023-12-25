@@ -69,7 +69,9 @@ class Notification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, null=True, on_delete=models.CASCADE)
     content = models.TextField()
-    url = models.CharField(max_length=255, null=True)
+    sender_user = models.ForeignKey(User, null=True, on_delete=models.CASCADE, related_name='sender')
+    is_read = models.BooleanField(default=False)
+
 
     def get_absolute_url(self):
         if self.post:

@@ -5,7 +5,7 @@
 
 {% block content %}
 
-<div class='random-posts'>
+<div class='random-posts' style='padding-left: 20px; padding-bottom: 20px;'>
 <h2 style='font: helvetica; font-weight: bold;'> {{ post.title }} </h2>
 {% if post.user.extrauser.profile_picture %}
 <a href='{% url "user_posts" post.user.username %}'> <img src='{{ post.user.extrauser.profile_picture.url }}' class='profile-picture w3-circle'> {{ post.user }}</a>

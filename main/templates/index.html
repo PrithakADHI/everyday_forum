@@ -62,6 +62,7 @@
         {% endif %}
     </div>
 </a>
+<div class='content'><a href="{% url 'post_details' latest_post.slug %}">View Comments</a></div> 
 </div>
 </div>
 {% endif %}
@@ -90,6 +91,8 @@
         <img src='{{ post.picture.url }}'>
         {% endif %}
     </div>
+
+    <div class='content'><a href="{% url 'post_details' post.slug %}">View Comments</a></div> 
 </a>
 </div>
 </div>

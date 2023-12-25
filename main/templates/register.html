@@ -3,12 +3,13 @@
 {% block title %} Register {% endblock %}
 
 {% block content %}
+<div class='login'>
 {% if messages %}
-    <ul class="messages">
+    
         {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
         {% endfor %}
-    </ul>
+   
 {% endif %}
 
 <div class='login-card'>
@@ -25,4 +26,5 @@
         <p class='register'> Already have an Account? <a href='{% url "login" %}'> Click Here to Login </a></p>
     </form>
     </div>
+</div>
 {% endblock %}

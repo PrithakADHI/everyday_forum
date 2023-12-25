@@ -30,6 +30,9 @@ urlpatterns = [
     path("logout", views.logout_view, name="logout"),
 
     path("notifications", views.notifications, name='notification'),
+
+    path("search_results", views.search_results, name='search_results'),
+    path("search_button", views.search_button, name='search_button')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
