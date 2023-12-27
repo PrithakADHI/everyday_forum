@@ -55,16 +55,15 @@
 </div>
 
 <div id="myModal1" class="modal">
-    <div class="modal-content">
+    <div class="modal-content" style='font-family: Helvetica, sans-serif; font-size: 24px; '>
       <span id="closeModal1">&times;</span>
-      <p class='heading'>Following List</p>
-      <br>
+      <p class='heading' style='font-size: 32px;'>Following List</p>
       {% for follower in following %}
       {% if follower.following.username != request.user %}
       {% if follower.following.extrauser.profile_picture %}
-      <p><a href="{% url 'user_posts' follower.following.username %}"><img src="{{ follower.following.extrauser.profile_picture.url }}" class="profile-picture"> {{ follower.following.username }} </a> {% if request.user.username == current_user.username %} </a><a href="{% url 'delete_follower' follower_id=follower.following.id %}" style='padding-left: 5px;'> Unfollow</a> {% endif %}</p>
+      <p><a href="{% url 'user_posts' follower.following.username %}"><img src="{{ follower.following.extrauser.profile_picture.url }}" style='border-radius: 50%; width: 75px; height: 75px;'> {{ follower.following.username }} </a> {% if request.user.username == current_user.username %} </a><a href="{% url 'delete_follower' follower_id=follower.following.id %}" style='padding-left: 5px;'> Unfollow</a> {% endif %}</p>
       {% else %}
-      <p><a href="{% url 'user_posts' follower.following.username %}"><img src="{% static 'images/default.jpg' %}" class="profile-picture"> {{ follower.following.username }} {% if request.user.username == current_user.username %} </a><a href="{% url 'delete_follower' follower_id=follower.following.id %}" style='padding-left: 5px;'> Unfollow</a> {% endif %}</p>
+      <p><a href="{% url 'user_posts' follower.following.username %}"><img src="{% static 'images/default.jpg' %}" style='border-radius: 50%; width: 75px; height: 75px;'> {{ follower.following.username }} {% if request.user.username == current_user.username %} </a><a href="{% url 'delete_follower' follower_id=follower.following.id %}" style='padding-left: 5px;'> Unfollow</a> {% endif %}</p>
       {% endif %}
       {% endif %}
       {% endfor %}
@@ -72,15 +71,14 @@
   </div>
   
   <div id='myModal2' class='modal'>
-      <div class='modal-content'>
+      <div class='modal-content'  style='font-family: Helvetica, sans-serif; font-size: 24px; '>
           <span id='closeModal2'>&times;</span>
-          <p class='heading'> Follower List </p>
-          <br>
+          <p class='heading' style='font-size: 32px;'> Follower List </p>
           {% for follower in followers %}
           {% if follower.user.extrauser.profile_picture %}
-          <p><a href='{% url "user_posts" follower.user.username %}'><img src='{{ follower.user.extrauser.profile_picture.url }}' class='profile-picture'> {{ follower.user.username }} </a></p>
+          <p><a href='{% url "user_posts" follower.user.username %}'><img src='{{ follower.user.extrauser.profile_picture.url }}' style='border-radius: 50%; width: 75px; height: 75px;'> {{ follower.user.username }} </a></p>
           {% else %}
-          <p><a href='{% url "user_posts" follower.user.username %}'><img src='{% static "images/default.jpg" %}' class='profile-picture'>{{ follower.user.username }}</a></p>
+          <p><a href='{% url "user_posts" follower.user.username %}'><img src='{% static "images/default.jpg" %}' style='border-radius: 50%; width: 75px; height: 75px;'>{{ follower.user.username }}</a></p>
           {% endif %}
           {% endfor %}
       </div>

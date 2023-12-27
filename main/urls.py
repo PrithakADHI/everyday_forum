@@ -36,6 +36,8 @@ urlpatterns = [
     path("search_results", views.search_results, name='search_results'),
     path("search_button", views.search_button, name='search_button'),
 
+    path("delete_reply/<int:id>", views.delete_reply, name='delete_reply'),
+
     path(
         "robots.txt",
         TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),

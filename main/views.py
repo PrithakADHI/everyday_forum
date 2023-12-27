@@ -121,11 +121,20 @@ def delete_follower_ajax(request, follower_id):
     return JsonResponse({'status': 'error'})
 
 def delete_comment(request, comment_id):
-    if request.method == 'GET':
-        comment = Comment.objects.get(id=comment_id)
+    if request.method == 'POST':
         Comment.objects.filter(id=comment_id).delete()
 
-        return redirect(request.META.get('HTTP_REFERER', '/default-url/'))
+        return redirect('index')
+
+    return render(request, "delete_comment.html")
+
+def delete_reply(request, id):
+    if request.method == 'POST':
+        Reply.objects.filter(id=id).delete()
+
+        return redirect('index')
+
+    return render(request, "delete_reply.html")
 
 # For Posts
 def user_posts(request, username):
@@ -193,9 +202,10 @@ def post_details(request, post_slug):
         notification_post = post
         notification_content = f"{request.user} has replied to your comment"
 
-        Notification.objects.filter(user=comment.user).update(is_read=True)
-        Notification.objects.create(user=notification_user, post=notification_post, sender_user=notification_sender_user, content=notification_content)
-        
+        if notification_user != notification_sender_user:
+            Notification.objects.filter(user=comment.user).update(is_read=True)
+            Notification.objects.create(user=notification_user, post=notification_post, sender_user=notification_sender_user, content=notification_content)
+            
         # Notify All People who are in the reply-section.
 
         replies = Reply.objects.filter(comment=comment)
@@ -204,8 +214,9 @@ def post_details(request, post_slug):
             user = reply.user
             sender_user = request.user
             content = f"{request.user} has replied to a comment you replied on. "
-            Notification.objects.filter(user=user).update(is_read=True)
-            Notification.objects.create(user=user, post=post, sender_user=sender_user, content=content)
+            if user != sender_user:
+                Notification.objects.filter(user=user).update(is_read=True)
+                Notification.objects.create(user=user, post=post, sender_user=sender_user, content=content)
 
 
         if reply_form.is_valid():
@@ -246,6 +257,8 @@ def delete_post(request, pk):
         return redirect('index')
 
     return render(request, 'delete_post.html', {'post': post})
+
+
 
 # For Authentication
 

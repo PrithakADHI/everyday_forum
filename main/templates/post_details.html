@@ -12,6 +12,14 @@
 {% else %}
 <img src='{% static "images/default.jpg" %}' class='profile-picture w3-circle'> {{ post.user }}
 {% endif %}
+
+{% if user.is_authenticated and user == post.user %}
+<div class="w3-dropdown-click" style='margin-left: 10px;'>
+
+      <a href="{% url 'post_delete' post.pk %}" class="w3-bar-item w3-button" style='width: auto;'><i class="fa fa-trash" aria-hidden="true"></i></a>
+
+  </div>
+{% endif %}
 <p> {{ post.created_at }} </p>
 
 <div style='white-space: pre-line; '> {{ post.content }} </div>
@@ -24,9 +32,6 @@
 
 <div style='margin-top: 20px;'>
 
-{% if user.is_authenticated and user == post.user %}
-<a href="{% url 'post_delete' post.pk %}"> Delete </a>
-{% endif %} 
 </div>
 </div>
 <div class='random-posts' style='padding-left: 15px;'>
@@ -68,8 +73,7 @@
                 {% else %}
                 <img src='{% static "images/default.jpg" %}' style='width:40px; height:40px; display: inline-block; margin-bottom: 25px;' class='w3-circle'>
                 {% endif %}
-                
-                {{ reply.user.username }}  <br>
+                {{ reply.user.username }} {% if request.user == reply.user %}<a href='{% url "delete_reply" reply.id %}'>&nbsp; &nbsp;X</a>{%endif%} <br>
             {{ reply.content }}
             </div>
         </div>
@@ -89,39 +93,15 @@
 </div>
 
 <script>
+    function myFunction() {
+        var x = document.getElementById("Demo");
+        if (x.className.indexOf("w3-show") == -1) {
+          x.className += " w3-show";
+        } else { 
+          x.className = x.className.replace(" w3-show", "");
+        }
 
-// Assuming you have an array of IDs in Django and passed it to the template
-function myFunction() {
-var ids = [{% for item in comments %} "{{ item.id }}", {% endfor %}];
-
-// Loop through each ID and add click event listeners
-for (var i = 0; i < ids.length; i++) {
-  var currentId = ids[i];
-  var element = document.getElementById(currentId);
-
-  // Check if the element exists
-  if (element) {
-    console.log(element)
-    // Add a click event listener to each element
-    element.addEventListener('click', function() {
-      // Deactivate all elements first
-      deactivateAllElements();
-
-      // Activate the clicked element
-      this.classList.add('active');
-    });
-  }
-}
-}
-// Function to deactivate all elements
-function deactivateAllElements() {
-  var elements = document.querySelectorAll('.target-element');
-  elements.forEach(function(element) {
-    element.classList.remove('active');
-  });
-}
-
-
+      }
 function resizeTextarea() {
     const textarea = document.getElementById('expandingTextarea');
     textarea.style.height = Math.max(textarea.scrollHeight + 2, 6 * parseFloat(getComputedStyle(textarea).fontSize)) + 'px';
