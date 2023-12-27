@@ -39,4 +39,4 @@ class ReplyForm(forms.ModelForm):
         fields = ['content']
     def __init__(self, *args, **kwargs):
         super(ReplyForm, self).__init__(*args, *kwargs)
-        self.fields['content'].widget.attrs.update({ 'class': 'reply-textarea', 'placeholder': '"Reply some nice things"' })
+        self.fields['content'].widget.attrs.update({ 'class': 'reply-textarea', 'placeholder': 'Reply some nice things' })

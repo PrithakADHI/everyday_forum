@@ -196,7 +196,9 @@ def post_details(request, post_slug):
         Notification.objects.filter(user=comment.user).update(is_read=True)
         Notification.objects.create(user=notification_user, post=notification_post, sender_user=notification_sender_user, content=notification_content)
         
-        replies = Reply.objects.filter(comment=comment).exclude(user=request.user)
+        # Notify All People who are in the reply-section.
+
+        replies = Reply.objects.filter(comment=comment)
 
         for reply in replies:
             user = reply.user
