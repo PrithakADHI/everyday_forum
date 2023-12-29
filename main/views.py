@@ -100,7 +100,7 @@ def add_follower_ajax(request, follower_id):
         notification_sender_user = request.user
         notification_content = f"{ request.user.username } has followed you."
 
-        Notification.objects.create(user=notification_user, content=notification_content, sender_user=notification_sender_user)
+        Notification.objects.create(user=notification_user, sender_user=notification_sender_user, content=notification_content)
 
         Notification.objects.filter(user=follower).update(is_read=True)
 

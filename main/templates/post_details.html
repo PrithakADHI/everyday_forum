@@ -53,12 +53,14 @@
 {% for comment in comments %}
 <div class='comment-container'>
 <div class='comment-box'>
+<a href='{% url "user_posts" comment.user.username %}'>
 {% if comment.user.extrauser.profile_picture %}
 <img class='profile-picture w3-circle' src='{{ comment.user.extrauser.profile_picture.url }}'> {{ comment.user.username }}{% if request.user == comment.user %}<a href='{% url "delete_comment" comment.id %}'>&nbsp; &nbsp;X</a>
 {% endif %}
 {% else %}
 <img class='profile-picture w3-circle' src='{% static 'images/default.jpg' %}'> {{ comment.user.username }}
 {% endif %}
+</a>
 <div style='white-space: pre-line;'>{{ comment.comment }}</div>
 </div>
 
@@ -68,12 +70,13 @@
     {% if reply.comment == comment %}
         <div class='reply-container'>
             <div class='comment-box' style='display: inline-block; padding-right: 10px;'>
+                <a href='{% url "user_posts" reply.user.username %}'>
                 {% if reply.user.extrauser.profile_picture %}
                 <img src='{{ reply.user.extrauser.profile_picture.url }}' style='width:40px; height:40px; display: inline-block;' class='w3-circle'>
                 {% else %}
                 <img src='{% static "images/default.jpg" %}' style='width:40px; height:40px; display: inline-block; margin-bottom: 25px;' class='w3-circle'>
                 {% endif %}
-                {{ reply.user.username }} {% if request.user == reply.user %}<a href='{% url "delete_reply" reply.id %}'>&nbsp; &nbsp;X</a>{%endif%} <br>
+                {{ reply.user.username }} </a> {% if request.user == reply.user %}<a href='{% url "delete_reply" reply.id %}'>&nbsp; &nbsp;X</a>{%endif%} <br>
             {{ reply.content }}
             </div>
         </div>
