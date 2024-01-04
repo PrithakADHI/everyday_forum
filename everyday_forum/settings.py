@@ -27,8 +27,8 @@ SECRET_KEY = 'django-insecure-o+=p(qp)-e!(m_jqat8((vm85fh8*(b_7l!m_@o=#lm$bq%@=@
 DEBUG = False
 
 
-ALLOWED_HOSTS = ['localhost', 'prithak.loca.lt', '0.tcp.in.ngrok.io', 'prithakadhikari.serveo.net']
-CSRF_TRUSTED_ORIGINS = ['https://prithak.loca.lt', 'http://0.tcp.in.ngrok.io', 'https://prithakadhikari.serveo.net']
+ALLOWED_HOSTS = ['localhost', '.vercel.app', '.now.sh', 'prithakadhikari.serveo.net']
+CSRF_TRUSTED_ORIGINS = ['https://localhost:8000', 'https://prithakadhikari.serveo.net']
 
 
 # Application definition
@@ -85,8 +85,12 @@ WSGI_APPLICATION = 'everyday_forum.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': '6dG2c--G42BbBGD4fEeC2gC*fAeg6b1F',
+        'HOST': 'viaduct.proxy.rlwy.net',
+        'PORT': '12127',
     }
 }
 
@@ -126,9 +130,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static') 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
