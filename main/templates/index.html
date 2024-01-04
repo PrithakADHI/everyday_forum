@@ -15,9 +15,9 @@
 <a href='{% url "user_posts" follower.following.username %}'>
 <div class='card'>
     {% if follower.following.extrauser.profile_picture %}
-    <img src='{{ follower.following.extrauser.profile_picture.url }}' class='profile' style='width: 5em; height: 5em;' /> 
+    <img loading='lazy' src='{{ follower.following.extrauser.profile_picture.url }}' class='profile' style='width: 5em; height: 5em;' /> 
     {% else %}
-    <img src='{% static "images/default.jpg" %}' class='profile' style='width: 5em; height: 5em;' />
+    <img loading='lazy' src='{% static "images/default.jpg" %}' class='profile' style='width: 5em; height: 5em;' />
     {% endif %}
     <p class='username' style='margin:0'>{{ follower.following.username }}</p>
 </div>
@@ -27,9 +27,9 @@
 <br>
 <div class='write-post'>
 {% if request.user.extrauser.profile_picture %}
-<img class='w3-circle post-profile' src='{{ request.user.extrauser.profile_picture.url }}'> &nbsp;{{request.user.username}}
+<img loading='lazy' class='w3-circle post-profile' src='{{ request.user.extrauser.profile_picture.url }}'> &nbsp;{{request.user.username}}
 {% else %}
-<img class='w3-circle post-profile' src='{% static "images/default.jpg" %}'> &nbsp; {{request.user.username}}
+<img loading='lazy' class='w3-circle post-profile' src='{% static "images/default.jpg" %}'> &nbsp; {{request.user.username}}
 {% endif %} <br><br>
 <input id="openModal1" class='post-textarea' placeholder="What's on your mind?"></textarea>
 <br><br>
@@ -41,9 +41,9 @@
     <a href='{% url "user_posts" request.user.username %}'>
         <div class='random-ass-picture'>
     {% if request.user.extrauser.profile_picture %}
-    <img class='w3-circle post-profile' src='{{ request.user.extrauser.profile_picture.url }}'> &nbsp;
+    <img loading='lazy' class='w3-circle post-profile' src='{{ request.user.extrauser.profile_picture.url }}'> &nbsp;
     {% else %}
-    <img class='w3-circle post-profile' src='{% static "images/default.jpg" %}'> &nbsp;
+    <img loading='lazy' class='w3-circle post-profile' src='{% static "images/default.jpg" %}'> &nbsp;
     {% endif %}
         </div>
     <div class='username'>
@@ -58,7 +58,7 @@
 
     <div class='post-image'>
         {% if latest_post.picture %}
-        <img src='{{ latest_post.picture.url }}'>
+        <img loading='lazy' src='{{ latest_post.picture.url }}'>
         {% endif %}
     </div>
 </a>
@@ -72,9 +72,9 @@
     <a href='{% url "user_posts" post.user.username %}'>
     <div class='post'>
     {% if post.user.extrauser.profile_picture %}
-    <img class='w3-circle post-profile' src='{{ post.user.extrauser.profile_picture.url }}'> &nbsp;
+    <img loading='lazy' class='w3-circle post-profile' src='{{ post.user.extrauser.profile_picture.url }}'> &nbsp;
     {% else %}
-    <img class='w3-circle post-profile' src='{% static "images/default.jpg" %}'> &nbsp;
+    <img loading='lazy' class='w3-circle post-profile' src='{% static "images/default.jpg" %}'> &nbsp;
     {% endif %}
     <div class='username'>
         {{post.user.username}} <br>
@@ -88,7 +88,7 @@
 
     <div class='post-image'>
         {% if post.picture %}
-        <img src='{{ post.picture.url }}'>
+        <img loading='lazy' src='{{ post.picture.url }}'>
         {% endif %}
     </div>
 
@@ -106,9 +106,9 @@ Maybe Search for Some of your Friends?
 </div>
 <div class='write-post'>
     {% if request.user.extrauser.profile_picture %}
-    <img class='w3-circle post-profile' src='{{ request.user.extrauser.profile_picture.url }}'> &nbsp;{{request.user.username}}
+    <img loading='lazy' class='w3-circle post-profile' src='{{ request.user.extrauser.profile_picture.url }}'> &nbsp;{{request.user.username}}
     {% else %}
-    <img class='w3-circle post-profile' src='{% static "images/default.jpg" %}'> &nbsp; {{request.user.username}}
+    <img loading='lazy' class='w3-circle post-profile' src='{% static "images/default.jpg" %}'> &nbsp; {{request.user.username}}
     {% endif %} <br><br>
     <input id="openModal1" class='post-textarea' placeholder="What's on your mind?"></textarea>
     <br><br>
