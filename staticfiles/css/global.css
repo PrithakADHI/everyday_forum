@@ -1,0 +1,539 @@
+body {
+    margin: 0;
+    font-family: Helvetica, sans-serif;
+    background-color: #E9EDF1;
+  }
+  
+  .topnav {
+    overflow: hidden;
+    background-color: rgb(34, 69, 119);
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  
+  .topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+
+    transition: color 0.3s ease, color 0.3s ease;
+
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .topnav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  .topnav a.active {
+    background-color: #04AA6D;
+    color: white;
+  }
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.3s ease, color 0.3s ease;
+}
+
+a:hover {
+  color: #3498db;
+}
+
+
+.body {
+  margin-left: 10px;
+}
+
+/* Basic button styles */
+button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Default state */
+button {
+  background-color: #3498db;
+  color: #fff;
+}
+
+/* Hover state */
+button:hover {
+  background-color: #2980b9;
+}
+
+/* Focus state */
+button:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+/* Active state */
+button:active {
+  background-color: #1f70c1;
+}
+
+/* Disabled state */
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.write-post {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  border-radius: 4px;
+  width: clamp(350px, 60vw, 75vw);
+  padding-left: 10px;
+}
+
+
+.write-post .post-textarea {
+  margin-left: 70px;
+  width:100%;margin:-3px;border:2px inset #eee'
+}
+
+.header {
+  font-family: Helvetica, sans-serif;
+  font-size: 26px;
+  padding-left: 1em;
+  font-weight: bolder;
+}
+
+.space {
+    padding-top: 0px;
+}
+
+.card:hover {
+  translate: 0 -10px;
+}
+
+.post-card:hover {
+  translate: 0 -10px;
+}
+
+.random-ass-picture {
+  display: inline-block;
+}
+
+.random-posts .username {
+  display: inline-block;
+}
+
+.card .profile {
+  width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.146);
+}
+
+.post-card .profile {
+  width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.146);
+
+}
+
+.card .username {
+  font-family: Helvetica, sans-serif;
+  font-size: 20px;
+}
+
+.post-card .username {
+  font-family: Helvetica, sans-serif;
+  font-size: 20px;
+}
+
+.profile-picture {
+  width: 3em;
+  height: 3em;
+}
+
+.reply-container {
+  margin-left: 10px;
+  padding-left: 10px;
+}
+
+.profile-picture:hover {
+  cursor: pointer;
+}
+
+.login-card {
+
+    text-align: center;
+    border: 1px solid hsl(0, 0%, 58%);
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px hsla(0, 0%, 0%, 0.1);
+    margin: 10px;
+    padding: 20px;
+    text-align: center;
+    width: clamp(200px, 30vw, 40vw);
+    min-width: 350px;
+    height: auto;
+}
+
+.login {
+  display: grid;
+  height: 50vh;
+  place-items: center;
+}
+
+.login-card .login-title {
+  font-family: helvetica, sans-serif;
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+
+.login-card .login-username {
+  font-family: helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.login-card .login-password {
+  font-family: helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.login-card .login-button {
+  font-family: helvetica, sans-serif;
+  font-size: 16px;
+}
+
+.login-card .register {
+  font-family: helvetica, sans-serif;
+  font-size: 16px;
+}
+
+.login-card .register-photo {
+  font-family: helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 12px 20px;
+  background-color: #E9EDF1;
+  border-radius: 10px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 3px solid #ccc;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+}
+
+textarea {
+  resize: none;
+  width: 100%;
+  background-color: #E9EDF1;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 3px solid #ccc;
+  -webkit-transition: 0.3s;
+  transition: 0.3s ease-in-out;
+  outline: none;
+  border-radius: 10px;
+}
+
+.reply-textarea {
+  background-color: #E9EDF1;
+  height: 55px;
+  border-radius: 10px;
+  overflow-y: hidden;
+  display: inline-block;
+}
+
+.submit-reply {
+  display: none;
+}
+
+.comment-box {
+  width: clamp(150px, auto, 70vw);
+  background-color: #E9EDF1;
+  border-radius: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  margin-top: 10px;
+}
+
+input:focus {
+  border: 3px solid #555;
+}
+
+textarea:focus {
+  border: 3px solid #555;
+}
+
+.random-posts {
+  background-color: white;
+  width: clamp(350px, 60vw, 85vw);
+  margin-top: 10px;
+  padding-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+
+
+.post-profile {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  box-shadow: 5px 5px 5px rgba(106, 106, 106, 0.5);
+}
+
+
+.card {
+  border: 1px solid hsl(0, 0%, 58%);
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px hsla(0, 0%, 0%, 0.1);
+  margin: 10px;
+  padding: 20px;
+  text-align: center;
+  min-width: 150px;
+  height: auto;
+  max-height: 300px;
+  display: inline-block;
+  transition: translate 0.3s ease, translate 0.3s ease;
+}
+
+.post-card {
+  border: 1px solid hsl(0, 0%, 58%);
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px hsla(0, 0%, 0%, 0.1);
+  margin: 10px;
+  padding: 20px;
+  text-align: center;
+  width: 250px;
+  height: auto;
+  max-height: 300px;
+  display: inline-block;
+  transition: translate 0.3s ease, translate 0.3s ease;
+}
+
+.random-posts .post {
+  padding-left: 10px;
+  padding-bottom: 20px;
+}
+
+.main-container {
+  padding-top: 100px;
+  margin: auto;
+  display: grid;
+  place-items: center;
+  width: clamp( 350px, 60vw, 75vw )
+}
+
+.card-container {
+  width: clamp(350px, 60vw, 75vw);
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  background-color: white;
+  border-radius: 4px;
+  padding-bottom: 30px;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;
+}
+
+.card-container::-webkit-scrollbar {
+  display: none;
+}
+
+.content {
+  padding-top: 1em;
+  white-space: pre-wrap;
+  padding-left: 2em;
+}
+
+.comment {
+  resize: none;
+  width: 80%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 3px solid #ccc;
+  height: 6em;
+  -webkit-transition: 0.3s;
+  transition: 0.3s ease-in-out;
+  outline: none;
+  overflow: hidden;
+}
+
+
+.comment:focus {
+  border: 3px solid #555;
+  width: 85%;
+}
+
+
+.comments-container {
+  border: 1px solid hsl(0, 0%, 58%);
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px hsla(0, 0%, 0%, 0.1);
+  margin: 10px;
+  padding: 20px;
+  width: 80%;
+  height: auto;
+  display: inline-block;
+}
+
+.online {
+    position: relative;
+}
+.online::after{
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: red;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.search-button {
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .search-bar {
+    display: none;
+  }
+
+  .search-button {
+    display: block;
+  }
+}
+
+
+.comment-container {
+  margin: 10px;
+  padding-bottom: 10px;
+  width: 80%;
+  height: auto;
+  display: inline-block;
+}
+
+.post-image img{
+  box-shadow: 5px 5px 5px hsla(0, 0%, 0%, 0.1);
+  max-width: 80%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.post-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  margin-bottom: 100px;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.post-modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+  height: auto;
+}
+
+/* Close Button */
+#closeModal1 {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+#closeModal1:hover,
+#closeModal:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#closeModal2 {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+#closeModal2:hover,
+#closeModal:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal .heading {
+  font-size: 24px;
+}
+
+.modal a {
+  text-decoration: none;
+  color: black;
+}
+
+/* Gradient background (uncomment and adjust as needed) */
+/*.my-button {
+  background: linear-gradient(to bottom, #3498db, #2980b9);
+  color: #fff;
+}*/
+
+/* Rounded style (uncomment and adjust border-radius as needed) */
+/*.my-button {
+  border-radius: 20px;
+}*/

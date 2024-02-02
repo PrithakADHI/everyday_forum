@@ -10,6 +10,9 @@ from .forms import MakePost, ProfilePictureForm, CommentForm, ReplyForm
 
 from datetime import datetime
 
+from rest_framework import generics
+from .serializers import PostSerializer
+
 # Create your views here.
 def index(request):
     posts = Post.objects.all()
@@ -333,3 +336,12 @@ def search_results(request):
 
 def search_button(request):
     return render(request, 'search_button.html')
+
+
+class PostListCreateView(generics.ListCreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer

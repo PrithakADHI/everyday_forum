@@ -7,6 +7,7 @@ from django.conf.urls.static import static
 
 from django.views.generic.base import TemplateView
 
+from .views import PostListCreateView, PostDetailView
 
 urlpatterns = [
     path("", views.index, name="index"),
@@ -37,6 +38,9 @@ urlpatterns = [
     path("search_button", views.search_button, name='search_button'),
 
     path("delete_reply/<int:id>", views.delete_reply, name='delete_reply'),
+
+    path('api/posts/', PostListCreateView.as_view(), name='post-list'),
+    path('api/posts/<slug:slug>/', PostDetailView.as_view(), name='post-detail'),
 
     path(
         "robots.txt",
